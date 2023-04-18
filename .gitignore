@@ -30,3 +30,11 @@
 *.exe
 *.out
 *.app
+
+*im.webarchive
+*.DS_Store
+cmake-build-debug/
+cmake-build-debug-coverage/
+.idea/
+.ipynb_checkpoints/
+googletest/
