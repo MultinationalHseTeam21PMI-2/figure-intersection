@@ -24,6 +24,13 @@ public:
         m_count_vertices = m_segments.size();
     }
 
+    const std::vector<Segment> &getSegments() const {
+        return m_segments;
+    }
+
+    size_t getCountVertices() const {
+        return m_count_vertices;
+    }
 
     bool containsSegment(const Segment segment) const {
         auto result = std::find(m_segments.begin(), m_segments.end(), segment);
