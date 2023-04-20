@@ -13,3 +13,6 @@ add_executable(${This} ${Sources})
 target_link_libraries(${This} PRIVATE
     gtest_main gtest
 )
+
+include(GoogleTest)
+gtest_discover_tests(${This})
