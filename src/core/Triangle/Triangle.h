@@ -4,7 +4,7 @@
 class Triangle : private Figure {
 public:
     Triangle() {
-        Triangle(Point{0, 1}, Point{1, 0}, {-1, 0});
+        Triangle(Point{0, 1}, Point{1, 0}, Point{-1, 0});
     }
 
     Triangle(const Point point1, const Point point2, const Point point3) {
