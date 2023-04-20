@@ -1,7 +1,7 @@
 #pragma once
 #include "../Figure/Figure.h"
 
-class Triangle : private Figure {
+class Triangle : public Figure {
 public:
     Triangle() {
         Triangle(Point{0, 1}, Point{1, 0}, Point{-1, 0});
