@@ -1,4 +1,5 @@
 #pragma once
+#include <stdexcept>
 #include <utility>
 
 typedef std::pair<double, double> Point;
@@ -29,7 +30,8 @@ public:
 
 
     bool operator==(const Segment other) const {
-        return m_point1 == other.m_point1 && m_point2 == other.m_point2;
+        return (m_point1 == other.m_point1 && m_point2 == other.m_point2) ||
+               (m_point1 == other.m_point2 && m_point2 == other.m_point1);
     }
 
 

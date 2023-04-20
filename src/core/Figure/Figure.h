@@ -1,8 +1,8 @@
 #pragma once
 #include "../Segment/Segment.h"
 #include <algorithm>
+#include <stdexcept>
 #include <vector>
-
 
 class Figure {
 public:
