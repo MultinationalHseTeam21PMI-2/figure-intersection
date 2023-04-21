@@ -29,15 +29,15 @@ TEST(Segment, test_segment_is_not_point) {
 }
 
 TEST(Segment, test_segments_are_equal) {
-    Segment segment1{{0, 0}, {1, 1}};
-    Segment segment2{{0, 0}, {1, 1}};
+    Segment segment1{Point{0, 0}, Point{1, 1}};
+    Segment segment2{Point{0, 0}, Point{1, 1}};
 
     ASSERT_TRUE(segment1 == segment2);
 }
 
 TEST(Segment, test_segments_with_switched_points_are_equal) {
-    Segment segment1{{0, 0}, {1, 1}};
-    Segment segment2{{1, 1}, {0, 0}};
+    Segment segment1{Point{0, 0}, Point{1, 1}};
+    Segment segment2{Point{1, 1}, Point{0, 0}};
 
     ASSERT_TRUE(segment1 == segment2);
 }
