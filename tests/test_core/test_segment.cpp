@@ -3,8 +3,8 @@
 
 
 TEST(Segment, test_segment_constructor) {
-    Point point1 = Point{1, 2};
-    Point point2 = Point{1, 2};
+    Point point1{1, 2};
+    Point point2{1, 2};
     Segment segment{point1, point2};
 
     ASSERT_EQ(segment.point1(), point1);
@@ -12,8 +12,8 @@ TEST(Segment, test_segment_constructor) {
 }
 
 TEST(Segment, test_segment_is_point) {
-    Point point1 = Point{1, 2};
-    Point point2 = Point{1, 2};
+    Point point1{1, 2};
+    Point point2{1, 2};
     Segment segment{point1, point2};
 
     ASSERT_TRUE(segment.isPoint());
@@ -21,8 +21,8 @@ TEST(Segment, test_segment_is_point) {
 
 
 TEST(Segment, test_segment_is_not_point) {
-    Point point1 = Point{0, 0};
-    Point point2 = Point{1, 1};
+    Point point1{0, 0};
+    Point point2{1, 1};
     Segment segment{point1, point2};
 
     ASSERT_FALSE(segment.isPoint());

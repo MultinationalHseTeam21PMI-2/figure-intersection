@@ -3,9 +3,9 @@
 #include "../../src/core/Figure/Figure.h"
 
 TEST(Figure, test_figure_constructor_with_3_segments) {
-    Point p1 = {0, 0};
-    Point p2 = {1, 1};
-    Point p3 = {1, 0};
+    Point p1{0, 0};
+    Point p2{1, 1};
+    Point p3{1, 0};
 
     Segment seg1 = {p1, p2};
     Segment seg2 = {p2, p3};
@@ -18,8 +18,8 @@ TEST(Figure, test_figure_constructor_with_3_segments) {
 }
 
 TEST(Figure, test_figure_constructor_with_3_equal_segments) {
-    Point p1 = {0, 0};
-    Point p2 = {1, 1};
+    Point p1{0, 0};
+    Point p2{1, 1};
 
     Segment seg1 = {p1, p2};
     Segment seg2 = {p1, p2};

@@ -3,9 +3,9 @@
 #include "../../src/core/Triangle/Triangle.h"
 
 TEST(Triangle, test_triangle_creation_by_3_points) {
-    Point p1 = {0, 0};
-    Point p2 = {1, 1};
-    Point p3 = {1, 0};
+    Point p1{0, 0};
+    Point p2{1, 1};
+    Point p3{1, 0};
 
     Triangle triangle{p1, p2, p3};
 
