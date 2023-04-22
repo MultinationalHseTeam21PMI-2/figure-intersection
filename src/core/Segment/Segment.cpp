@@ -3,7 +3,7 @@
 
 std::unique_ptr<Segment> Segment::intersection(const Segment &a, const Segment &b) {
     if (std::abs(a.get_slope() - b.get_slope()) < PRECISION) {
-        std::vector<std::pair<Point, bool>> line_for_sort{{a.point1(), 0}, {a.point2(), 0}, {b.point1(), 1}, {b.point2(), 1}};
+        std::vector<std::pair<Point, bool>> line_for_sort{{a.point1(), false}, {a.point2(), false}, {b.point1(), true}, {b.point2(), true}};
 
         sort(line_for_sort.begin(), line_for_sort.end(), [](std::pair<Point, bool> a, std::pair<Point, bool> b) {
             if (std::abs(a.first.x - b.first.x) < PRECISION)
