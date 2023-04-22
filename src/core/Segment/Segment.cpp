@@ -38,7 +38,7 @@ std::unique_ptr<Segment> Segment::intersection(const Segment &a, const Segment &
     double RESULT_X = -(C1 * B2 - C2 * B1) / (A1 * B2 - A2 * B1);
     double RESULT_Y = -(A1 * C2 - A2 * C1) / (A1 * B2 - A2 * B1);
 
-    Point Result(RESULT_X, RESULT_Y);
+    Point result(RESULT_X, RESULT_Y);
 
-    return std::make_unique<Segment>(Result, Result);
+    return std::make_unique<Segment>(result, result);
 }
