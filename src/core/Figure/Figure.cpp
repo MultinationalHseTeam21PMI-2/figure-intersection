@@ -20,11 +20,3 @@ bool Figure::containsSegment(const Segment &segment) const {
 
     return result1 != m_segments.end() || result2 != m_segments.end();
 }
-
-
-/// @brief Method intersection finds intersections between two figures
-/// @param figure1
-/// @param figure2
-/// @return vector of segments
-std::vector<Segment> &Figure::intersection(const Figure figure1, const Figure figure2) {
-}

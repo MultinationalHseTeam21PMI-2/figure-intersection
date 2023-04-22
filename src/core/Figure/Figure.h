@@ -20,10 +20,4 @@ public:
     const std::vector<Segment> &getSegments() const { return m_segments; }
 
     bool containsSegment(const Segment &segment) const;
-
-    /// @brief Method intersection finds intersections between two figures
-    /// @param figure1
-    /// @param figure2
-    /// @return vector of segments
-    static std::vector<Segment> &intersection(const Figure figure1, const Figure figure2);
 };

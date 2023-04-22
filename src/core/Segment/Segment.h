@@ -1,38 +1,11 @@
 #pragma once
 
 #include <algorithm>
-#include <cmath>
 #include <memory>
 #include <stdexcept>
-#include <utility>
 #include <vector>
 
-#define PRECISION 0.001
-
-class Point {
-public:
-    double x, y;
-    explicit Point(double a = 0, double b = 0) {
-        x = a, y = b;
-    }
-    double norm() const {
-        return std::sqrt(std::pow(x, 2) + std::pow(y, 2));
-    }
-    Point operator+(Point b) {
-        return Point(x + b.x, y + b.y);
-    }
-    Point operator-(Point b) {
-        return Point(x - b.x, x - b.y);
-    }
-    bool operator==(Point b) const {
-        return (std::abs(x - b.x) < PRECISION && std::abs(y - b.y) < PRECISION);
-    }
-};
-
-inline double norm(Point a) {
-    return std::sqrt(std::pow(a.x, 2) + std::pow(a.y, 2));
-}
-
+#include "../Point/Point.h"
 
 /// @brief Class segment realise the segment in 2d space
 class Segment {
@@ -69,11 +42,4 @@ public:
         return (m_point1 == other.m_point1 && m_point2 == other.m_point2) ||
                (m_point1 == other.m_point2 && m_point2 == other.m_point1);
     }
-
-
-    /// @brief Static method that finds intersection between two segments
-    /// @param seg1
-    /// @param seg2
-    /// @return nullptr if no intersection | Segment*
-    static std::unique_ptr<Segment> intersection(const Segment &a, const Segment &b);
 };
