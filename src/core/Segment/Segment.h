@@ -1,4 +1,5 @@
 #pragma once
+
 #include <algorithm>
 #include <cmath>
 #include <memory>
@@ -13,9 +14,15 @@ public:
     explicit Point(double a = 0, double b = 0) {
         x = a, y = b;
     }
-    double norm() const { return std::sqrt(std::pow(x, 2) + std::pow(y, 2)); }
-    Point operator+(Point b) { return Point(x + b.x, y + b.y); }
-    Point operator-(Point b) { return Point(x - b.x, x - b.y); }
+    double norm() const { 
+        return std::sqrt(std::pow(x, 2) + std::pow(y, 2)); 
+    }
+    Point operator+(Point b) {
+        return Point(x + b.x, y + b.y); 
+    }
+    Point operator-(Point b) { 
+        return Point(x - b.x, x - b.y); 
+    }
     bool operator==(Point b) const {
         return (std::abs(x - b.x) < PRECISION && std::abs(y - b.y) < PRECISION);
     }
