@@ -3,11 +3,11 @@
 
 std::unique_ptr<Segment>  Segment::intersection(const Segment &a, const Segment &b){
     if(std::abs(a.get_slope()-b.get_slope()) < PRECISION) {
-        std::vector<std::pair<Point, bool>> line_for_sort {{a.point1(), 0},{a.point2(), 0},{b.point1(), 1},{b.point2(), 1}};
+        std::vector<std::pair<Point, bool>> line_for_sort {{a.point1(), false},{a.point2(), false},{b.point1(), true},{b.point2(), true}};
 
         sort(line_for_sort.begin(), line_for_sort.end(), [](std::pair<Point, bool> a, std::pair<Point, bool> b) {
             if(std::abs(a.first.x - b.first.x) < PRECISION) return a.first.y < b.first.y;
-            else return a.first.x < b.first.x;
+            return a.first.x < b.first.x;
         });
 
         /*for(auto check : line_for_sort) {
@@ -35,7 +35,7 @@ std::unique_ptr<Segment>  Segment::intersection(const Segment &a, const Segment 
         double RESULT_X = -(C1 * B2 - C2 * B1) / (A1 * B2 - A2 * B1);
         double RESULT_Y = -(A1 * C2 - A2 * C1) / (A1 * B2 - A2 * B1);
 
-        Point Result(RESULT_X, RESULT_Y);
+        Point result(RESULT_X, RESULT_Y);
 
         return std::make_unique<Segment>(Result, Result);
     }
