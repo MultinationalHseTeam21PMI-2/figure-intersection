@@ -32,9 +32,12 @@ public:
         return m_count_vertices;
     }
 
-    bool containsSegment(const Segment segment) const {
-        auto result = std::find(m_segments.begin(), m_segments.end(), segment);
-        return result != m_segments.end();
+    bool containsSegment(const Segment &segment) const {
+        Segment reversed_segment(segment.point2(), segment.point1());
+        auto result1 = std::find(m_segments.begin(), m_segments.end(), segment);
+        auto result2 = std::find(m_segments.begin(), m_segments.end(), reversed_segment);
+
+        return result1 != m_segments.end() || result2 != m_segments.end();
     }
 
 
