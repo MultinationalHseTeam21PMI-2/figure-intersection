@@ -1,29 +1,30 @@
 #pragma once
-#include <stdexcept>
-#include <memory>
-#include <utility>
-#include <cmath>
-#include <vector>
 #include <algorithm>
+#include <cmath>
+#include <memory>
+#include <stdexcept>
+#include <utility>
+#include <vector>
 
 #define PRECISION 0.001
-class Point{
+class Point {
 public:
     double x, y;
     explicit Point(double a = 0, double b = 0) {
         x = a, y = b;
     }
-    double norm() const {return std::sqrt(std::pow(x,2) + std::pow(y,2)); }
-    Point operator+( Point b) {return Point(x + b.x, y + b.y);}
-    Point operator-( Point b) {return Point(x - b.x, x - b.y);}
-    bool operator==( Point b) const {return (x == b.x && y == b.y); }
-
-
+    double norm() const { return std::sqrt(std::pow(x, 2) + std::pow(y, 2)); }
+    Point operator+(Point b) { return Point(x + b.x, y + b.y); }
+    Point operator-(Point b) { return Point(x - b.x, x - b.y); }
+    bool operator==(Point b) const {
+        return (std::abs(x - b.x) < PRECISION && std::abs(y - b.y) < PRECISION);
+    }
 };
 
+inline double norm(Point a) {
+    return std::sqrt(std::pow(a.x, 2) + std::pow(a.y, 2));
+}
 
-
-inline double norm(Point a) {return std::sqrt(std::pow(a.x,2) + std::pow(a.y,2));}
 
 /// @brief Class segment realise the segment in 2d space
 class Segment {
@@ -50,8 +51,9 @@ public:
     bool isPoint() const { return m_point1 == m_point2; }
 
     inline double get_slope() const {
-        if(std::abs(m_point1.x - m_point2.x) > PRECISION ) return  (m_point1.y - m_point2.y)/ (m_point1.x - m_point2.x);
-        else return 0;
+        if (std::abs(m_point1.x - m_point2.x) > PRECISION)
+            return (m_point1.y - m_point2.y) / (m_point1.x - m_point2.x);
+        return 0;
     }
 
 
