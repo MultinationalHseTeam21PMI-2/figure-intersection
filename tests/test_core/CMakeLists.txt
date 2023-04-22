@@ -11,7 +11,7 @@ set(Sources
 
 add_executable(${This} ${Sources})
 target_link_libraries(${This} PRIVATE
-    gtest_main gtest
+    gtest_main gtest core
 )
 
 include(GoogleTest)
