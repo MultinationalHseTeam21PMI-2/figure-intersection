@@ -6,6 +6,7 @@ set(Sources
     test_figure.cpp
     test_segment.cpp
     test_triangle.cpp
+    test_intersection.cpp
     main.cpp
 )
 
