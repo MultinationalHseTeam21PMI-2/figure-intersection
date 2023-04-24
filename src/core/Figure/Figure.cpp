@@ -1,15 +1,49 @@
 #include "Figure.h"
 
+#include <set>
+
+bool Figure::isCorrectFigure() {
+
+    if (m_segments.size() == 1)
+        return true;
+
+    std::vector<Point> all_points;
+    std::set<Point> points;
+
+    for (auto segment: m_segments) {
+        all_points.push_back(segment.point1());
+        all_points.push_back(segment.point2());
+        points.insert(segment.point1());
+        points.insert(segment.point2());
+    }
+
+    for (auto point: points) {
+        const int count = std::count(all_points.begin(), all_points.end(), point);
+        if (count != 2) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 Figure::Figure(std::initializer_list<Segment> segments) {
     for (auto segment: segments) {
         if (segment.isPoint() || containsSegment(segment)) {
             continue;
         }
+
         m_segments.push_back(segment);
     }
 
-    // TODO: Check if can't create figure by passed segments
-    m_count_vertices = m_segments.size();
+    if (!isCorrectFigure())
+        throw std::runtime_error("Can't create figure by passed segments");
+
+    if (m_segments.size() == 1) {
+        m_count_vertices = 2;
+    } else {
+        m_count_vertices = m_segments.size();
+    }
 }
 
 

@@ -36,5 +36,12 @@ TEST(Figure, test_figure_segments_are_not_connected_expects_error) {
     Segment seg3 = {Point{4, 4}, Point{5, 5}};
 
     std::initializer_list<Segment> list{seg1, seg2, seg3};
-    ASSERT_THROW(Figure(list), std::runtime_error);
+    try {
+        Figure test(list);
+        FAIL();
+    } catch (std::runtime_error const &err) {
+        EXPECT_EQ(err.what(), std::string("Can't create figure by passed segments"));
+    } catch (...) {
+        FAIL();
+    }
 }

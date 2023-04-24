@@ -7,10 +7,12 @@
 #include "../Segment/Segment.h"
 
 class Figure {
-public:
+private:
     std::vector<Segment> m_segments;
     size_t m_count_vertices;
 
+    bool isCorrectFigure();
+    
 public:
     Figure() {}
 

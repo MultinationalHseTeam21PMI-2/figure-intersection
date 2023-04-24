@@ -9,8 +9,8 @@ TEST(Segment, test_segment_intersection_is_segment) {
     Segment X(a, b), Y(c, d);
     Segment Intersection_XY = *intersection(X, Y);
 
-    ASSERT_EQ(Intersection_XY.point1(), d);
-    ASSERT_EQ(Intersection_XY.point2(), b);
+    Segment expected_segment(d, b);
+    ASSERT_EQ(Intersection_XY, expected_segment);
 }
 
 TEST(Segment, test_segment_intersection_is_point) {
@@ -29,8 +29,8 @@ TEST(Segment, test_segment_intersection) {
     Segment first(x_A, x_B), second(x_C, x_D);
     Segment Intersection_XY = *intersection(first, second);
 
-    ASSERT_EQ(Intersection_XY.point1(), x_C);
-    ASSERT_EQ(Intersection_XY.point2(), x_B);
+    Segment expected_segment(x_B, x_C);
+    ASSERT_EQ(Intersection_XY, expected_segment);
 }
 
 TEST(Segment, test_segments_no_intersection) {
