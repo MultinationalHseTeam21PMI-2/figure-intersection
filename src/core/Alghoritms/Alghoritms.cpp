@@ -12,10 +12,6 @@ std::unique_ptr<Segment> intersection(const Segment &a, const Segment &b) {
             return a.first.x < b.first.x;
         });
 
-        /*for(auto check : line_for_sort) {
-            std::cout << "!" << check.first.y << '\n';
-        }*/
-
         std::string pattern{};
         for (auto x: line_for_sort) {
             if (x.second) {
@@ -24,8 +20,6 @@ std::unique_ptr<Segment> intersection(const Segment &a, const Segment &b) {
                 pattern.push_back('X');
             }
         }
-
-        /*std::cout << line_for_sort[1].first.y << " " << line_for_sort[2].first.y << '\n';*/
 
         if (pattern == "XXYY" || pattern == "YYXX") {
             return nullptr;
