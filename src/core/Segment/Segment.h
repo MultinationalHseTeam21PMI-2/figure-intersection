@@ -32,8 +32,9 @@ public:
     bool isPoint() const { return m_point1 == m_point2; }
 
     inline double get_slope() const {
-        if (std::abs(m_point1.x - m_point2.x) > PRECISION)
+        if (std::abs(m_point1.x - m_point2.x) > PRECISION) {
             return (m_point1.y - m_point2.y) / (m_point1.x - m_point2.x);
+        }
         return 0;
     }
 

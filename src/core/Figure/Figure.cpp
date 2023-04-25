@@ -2,10 +2,10 @@
 
 #include <set>
 
-bool Figure::isCorrectFigure() {
-
-    if (m_segments.size() == 1)
+bool Figure::isCorrectFigure() const {
+    if (m_segments.size() == 1) {
         return true;
+    }
 
     std::vector<Point> all_points;
     std::set<Point> points;
@@ -26,6 +26,17 @@ bool Figure::isCorrectFigure() {
 
     return true;
 }
+
+
+size_t Figure::getCountVertices() const {
+    return m_count_vertices;
+}
+
+
+const std::vector<Segment> &Figure::getSegments() const {
+    return m_segments;
+}
+
 
 Figure::Figure(std::initializer_list<Segment> segments) {
     for (auto segment: segments) {

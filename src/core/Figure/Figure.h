@@ -11,15 +11,15 @@ private:
     std::vector<Segment> m_segments;
     size_t m_count_vertices;
 
-    bool isCorrectFigure();
-    
+    bool isCorrectFigure() const;
+
 public:
     Figure() {}
 
     Figure(std::initializer_list<Segment> segments);
 
-    size_t getCountVertices() const { return m_count_vertices; }
-    const std::vector<Segment> &getSegments() const { return m_segments; }
+    size_t getCountVertices() const;
+    const std::vector<Segment> &getSegments() const;
 
     bool containsSegment(const Segment &segment) const;
 };

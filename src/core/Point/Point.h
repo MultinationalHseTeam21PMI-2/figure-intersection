@@ -5,15 +5,12 @@
 #include <memory>
 #include <stdexcept>
 
-
 #define PRECISION 0.001
 
 class Point {
 public:
     double x, y;
-    explicit Point(double a = 0, double b = 0) {
-        x = a, y = b;
-    }
+    explicit Point(double a = 0, double b = 0) : x(a), y(b) {}
 
     double norm() const {
         return std::sqrt(std::pow(x, 2) + std::pow(y, 2));
