@@ -58,7 +58,7 @@ TEST(Segment, test_segments_no_intersection) {
         Point A(1,1), B(2,2), C(-1,1), D(-2,2);
         Segment AB = Segment(A,B), CD = Segment(C,D);
         std::unique_ptr<Segment> Intersection_XY = intersection(AB,CD);
-        ASSERT_EQ(Intersection_XY, nullptr);
+        ASSERT_TRUE(Intersection_XY ==  nullptr);
     }
 }
 
