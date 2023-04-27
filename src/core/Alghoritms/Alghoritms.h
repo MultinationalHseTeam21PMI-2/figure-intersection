@@ -19,4 +19,4 @@ std::unique_ptr<Segment> intersection(const Segment &a, const Segment &b);
 /// @param figure1
 /// @param figure2
 /// @return vector of segments
-std::vector<Segment> &intersection(const Figure &figure1, const Figure &figure2);
+std::vector<Segment> intersection(const Figure &figure1, const Figure &figure2);
