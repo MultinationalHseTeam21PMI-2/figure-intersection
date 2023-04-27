@@ -28,7 +28,7 @@ TEST(Segment, test_segment_intersection_is_point) {
     {
         Point A(0,0), B(2,2), C(0,0), D(-2,2);
         Segment first = Segment(A,B), second = Segment(C,D);
-        std::unique_ptr<Segment> Intersection_XY = intersection(first,second);
+        Segment Intersection_XY = *intersection(first,second);
 
         Segment expected_segment(A, A);
         ASSERT_TRUE(Intersection_XY.isPoint());
@@ -58,7 +58,7 @@ TEST(Segment, test_segments_no_intersection) {
         Point A(1,1), B(2,2), C(-1,1), D(-2,2);
         Segment AB = Segment(A,B), CD = Segment(C,D);
         std::unique_ptr<Segment> Intersection_XY = intersection(first,second);
-        ASSERT_EQ(Intersection_XY, nullptr);
+        ASSERT_EQ(Intersection_XY.get(), nullptr);
     }
 }
 
