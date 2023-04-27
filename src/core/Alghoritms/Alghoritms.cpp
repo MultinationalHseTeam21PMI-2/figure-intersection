@@ -57,6 +57,7 @@ Point solve_linear_system(const Segment& a, const Segment& b) {
     return Point(RESULT_X, RESULT_Y);
 }
 
+
 std::unique_ptr<Segment> intersection(const Segment &a, const Segment &b) {
     if (are_equal(a.get_slope(),b.get_slope())) {
 
@@ -88,6 +89,7 @@ std::unique_ptr<Segment> intersection(const Segment &a, const Segment &b) {
     }
     return nullptr;
 }
+
 
 std::vector<Segment> intersection(const Figure &figure1, const Figure &figure2){
     // disaster and disturbance of humanity
