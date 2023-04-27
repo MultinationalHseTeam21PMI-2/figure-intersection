@@ -3,8 +3,6 @@
 #include <vector>
 #include "../core/Segment/Segment.h"
 
-typedef std::pair<double, double> Point;
-
 std::vector<std::vector<Point>> input() {
     int n;
     std::cout << "Enter the number of shapes:";
@@ -21,23 +19,34 @@ std::vector<std::vector<Point>> input() {
 
         for (int j = 0; j < num_vertices; j++) {
             std::string input;
-                std::cin >> input;
+            double x, y;
+            std::cin >> input;
+            if (!input.empty()) {
                 try {
-                    vertices[j].first = input.empty() ? 0 : std::stod(input);
+                    x = std::stod(input);
                 } catch (...) {
                     std::cerr << "Error: Incorrect value entered. Enter numeric value."
-                              << std::endl;
+                    << std::endl;
                     return {};
                 }
+            } else {
+                x = 0;
+            }
 
-                std::cin >> input;
+            std::cin >> input;
+            if (!input.empty()) {
                 try {
-                    vertices[j].second = input.empty() ? 0 : std::stod(input);
+                    y = std::stod(input);
                 } catch (...) {
                     std::cerr << "Error: Incorrect value entered. Enter numeric value."
-                              << std::endl;
+                    << std::endl;
                     return {};
                 }
+            }
+            else {
+                y = 0;
+            }
+            vertices[j] = Point(x, y);
         }
         shapes[i] = vertices;
     }
@@ -51,10 +60,11 @@ void output(std::vector<Segment>& segments) {
         Point point1 = segments[i].point1();
         Point point2 = segments[i].point2();
         if (point1 == point2) {
-            std::cout << "Triangle intersection point: (" << point1.first << ", " << point1.second << ")" << std::endl;
+            std::cout << "Triangle intersection point: (" << point1.x << ", " << point1.y << ")" << std::endl;
         }
         else {
-            std::cout << "Triangles intersect on segment: (" << point1.first << ", " << point1.second << ") - (" << point2.first << ", " << point2.second << ")" << std::endl;
+            std::cout << "Triangles intersect on segment: (" << point1.x << ", " << point1.y << ") - (" << point2.x << ", " << point2.y << ")"
+            << std::endl;
         }
     }
 }
