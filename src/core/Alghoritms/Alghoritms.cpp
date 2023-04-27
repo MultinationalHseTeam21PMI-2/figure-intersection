@@ -1,6 +1,7 @@
 #include "Alghoritms.h"
 
 bool are_equal(double a, double b, double precision = PRECISION) {
+    if(std::abs(a) < precision/2.0f && std::abs(b) < precision/2.0f) return std::signbit(a) == std::signbit(b);
     return std::abs(a - b) < precision;
 }
 
