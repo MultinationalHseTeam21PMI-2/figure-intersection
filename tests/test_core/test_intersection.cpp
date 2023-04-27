@@ -3,6 +3,7 @@
 #include "../../src/core/Alghoritms/Alghoritms.h"
 #include "../../src/core/Segment/Segment.h"
 
+// Intersection for segments
 
 TEST(Segment, test_segment_intersection_is_segment) {
     Point a(-6.67, 3.5), b(4.09, 4.62), c(11.467539, 5.3879223), d(-2.1667461, 3.96874017);
@@ -40,3 +41,22 @@ TEST(Segment, test_segments_no_intersection) {
     std::unique_ptr<Segment> intersection_AB_CD = intersection(AB, CD);
     ASSERT_EQ(intersection_AB_CD.get(), nullptr);
 }
+
+TEST(Segment, test_segments_no_intersection) {
+    Point A(1,1), B(2,2), C(-1,1), D(-2,2);
+    Segment AB = Segment(A,B), CD = Segment(C,D);
+    std::unique_ptr<Segment> Intersection_XY = intersection(first,second);
+    ASSERT_EQ(Intersection_XY, nullptr)
+}
+
+TEST(Segment, test_segment_intersection_is_point) {
+    Point A(0,0), B(2,2), C(0,0), D(-2,2);
+    Segment first = Segment(A,B), second = Segment(C,D);
+    std::unique_ptr<Segment> Intersection_XY = intersection(first,second);
+
+    Segment expected_segment(A, A);
+    ASSERT_TRUE(Intersection_XY.isPoint())
+    ASSERT_EQ(Intersection_XY, expected_segment)        
+}
+
+// Intersection for figures
