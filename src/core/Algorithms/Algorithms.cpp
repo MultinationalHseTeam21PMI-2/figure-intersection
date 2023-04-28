@@ -12,28 +12,16 @@ bool is_between(double a, double b, double mid, double precision = PRECISION);
 
 bool is_point_between(const Point &a, const Point &b, const Point &mid, double precision = PRECISION);
 
-bool is_belong_to_segment(const Point &point, const Segment &segment, double precision = PRECISION) {
-    return is_point_between(segment.point1(), segment.point2(), point, precision);
-}
+bool is_belong_to_segment(const Point &point, const Segment &segment, double precision = PRECISION);
+
+bool is_segments_on_same_line(const Segment &a, const Segment &b, double precision = PRECISION);
 
 
-Point solve_linear_system(const Segment &a, const Segment &b) {
-    // Вычисляем коэффициенты уравнений Ax + By + C = 0 прямых, на которых лежат отрезки
-    const double A1 = a.point2().y - a.point1().y, A2 = b.point2().y - b.point1().y;
-    const double B1 = a.point1().x - a.point2().x, B2 = b.point1().x - b.point2().x;
-    const double C1 = a.point1().y * a.point2().x - a.point1().x * a.point2().y,
-                 C2 = b.point1().y * b.point2().x - b.point1().x * b.point2().y;
-
-    // Решаем линейную систему, составленную из найденных коэффициентов, методом Крамера,
-    // что имеет смысл в силу того, что детерминант матрицы коэффициентов 'далёк' от 0 с заданной точностью.
-    const double RESULT_X = -(C1 * B2 - C2 * B1) / (A1 * B2 - A2 * B1);
-    const double RESULT_Y = -(A1 * C2 - A2 * C1) / (A1 * B2 - A2 * B1);
-
-    return Point(RESULT_X, RESULT_Y);
-}
+Point solve_linear_system(const Segment &a, const Segment &b);
 
 std::unique_ptr<Segment> intersection(const Segment &a, const Segment &b) {
     if (are_equal(a.get_slope(), b.get_slope())) {
+        if (!is_segments_on_same_line(a, b)) return nullptr;
 
         // Если точка принадлежит первому отрезку, то помечаем значением false, иначе - true.
         std::vector<std::pair<Point, bool>> sorted_segment_points{{a.point1(), false}, {a.point2(), false}, {b.point1(), true}, {b.point2(), true}};
@@ -67,28 +55,31 @@ bool is_subset(const Segment &subset, const Segment &set) {
     return is_belong_to_segment(subset.point1(), set) && is_belong_to_segment(subset.point2(), set);
 }
 
-std::vector<Segment> &intersection(const Figure &figure1, const Figure &figure2) {
+std::vector<Segment> intersection(const Figure &figure1, const Figure &figure2) {
     std::vector<Segment> union_of_intersections;
     for (auto seg_a: figure1.getSegments()) {
         for (auto seg_b: figure2.getSegments()) {
-            if (intersection(seg_a, seg_b) == nullptr) {
+
+            std::unique_ptr<Segment> seg_intersection = intersection(seg_a, seg_b);
+
+            if (seg_intersection == nullptr) {
                 continue;
             }
 
             bool unique_addition = true;
             for (auto added_segments: union_of_intersections) {
-                if (is_subset(*intersection(seg_a, seg_b), added_segments)) {
+                if (is_subset(*seg_intersection, added_segments)) {
                     unique_addition = false;
                     break;
                 }
             }
 
             if (unique_addition) {
-                union_of_intersections.push_back(*intersection(seg_a, seg_b));
+                union_of_intersections.push_back(*seg_intersection);
             }
         }
     }
-    return *std::make_unique<std::vector<Segment>>(union_of_intersections);
+    return union_of_intersections;
 }
 
 bool are_equal(double a, double b, double precision) {
@@ -123,4 +114,30 @@ bool is_point_between(const Point &a, const Point &b, const Point &mid, double p
         return true;
     }
     return false;
+}
+Point solve_linear_system(const Segment &a, const Segment &b) {
+    // Вычисляем коэффициенты уравнений Ax + By + C = 0 прямых, на которых лежат отрезки
+    const double A1 = a.point2().y - a.point1().y, A2 = b.point2().y - b.point1().y;
+    const double B1 = a.point1().x - a.point2().x, B2 = b.point1().x - b.point2().x;
+    const double C1 = a.point1().y * a.point2().x - a.point1().x * a.point2().y,
+                 C2 = b.point1().y * b.point2().x - b.point1().x * b.point2().y;
+
+    // Решаем линейную систему, составленную из найденных коэффициентов, методом Крамера,
+    // что имеет смысл в силу того, что детерминант матрицы коэффициентов 'далёк' от 0 с заданной точностью.
+    const double RESULT_X = -(C1 * B2 - C2 * B1) / (A1 * B2 - A2 * B1);
+    const double RESULT_Y = -(A1 * C2 - A2 * C1) / (A1 * B2 - A2 * B1);
+
+    return Point(RESULT_X, RESULT_Y);
+}
+bool is_belong_to_segment(const Point &point, const Segment &segment, double precision) {
+    return is_point_between(segment.point1(), segment.point2(), point, precision);
+}
+double f_line(const Segment &a, const Point &arg) {
+    const double A = a.point2().y - a.point1().y,
+                 B = a.point1().x - a.point2().x,
+                 C = a.point1().y * a.point2().x - a.point1().x * a.point2().y;
+    return A * arg.x + B * arg.y + C;
+}
+bool is_segments_on_same_line(const Segment &a, const Segment &b, double precision) {
+    return std::abs(f_line(b, a.point1())) < precision;
 }
