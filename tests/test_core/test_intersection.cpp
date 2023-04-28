@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "../../src/core/Alghoritms/Alghoritms.h"
+#include "../../src/core/Algorithms/Algorithms.h"
 #include "../../src/core/Segment/Segment.h"
 
 // Intersection for segments
@@ -26,13 +26,13 @@ TEST(Segment, test_segment_intersection_is_point) {
         ASSERT_TRUE(Intersection_XY.point1() == Point(-3.4236192700012, 3.8379132358363));
     }
     {
-        Point A(0,0), B(2,2), C(0,0), D(-2,2);
-        Segment first = Segment(A,B), second = Segment(C,D);
-        Segment Intersection_XY = *intersection(first,second);
+        Point A(0, 0), B(2, 2), C(0, 0), D(-2, 2);
+        Segment first = Segment(A, B), second = Segment(C, D);
+        Segment Intersection_XY = *intersection(first, second);
 
         Segment expected_segment(A, A);
         ASSERT_TRUE(Intersection_XY.isPoint());
-        ASSERT_EQ(Intersection_XY, expected_segment); 
+        ASSERT_EQ(Intersection_XY, expected_segment);
     }
 }
 
@@ -56,10 +56,10 @@ TEST(Segment, test_segments_no_intersection_1) {
 }
 TEST(Segment, test_segments_no_intersection_2) {
     {
-        Point A(1,1), B(2,2), C(-1,1), D(-2,2);
-        Segment AB = Segment(A,B), CD = Segment(C,D);
-        std::unique_ptr<Segment> Intersection_XY = intersection(AB,CD);
-        ASSERT_EQ(Intersection_XY.get(),nullptr);
+        Point A(1, 1), B(2, 2), C(-1, 1), D(-2, 2);
+        Segment AB = Segment(A, B), CD = Segment(C, D);
+        std::unique_ptr<Segment> Intersection_XY = intersection(AB, CD);
+        ASSERT_EQ(Intersection_XY.get(), nullptr);
     }
 }
 
