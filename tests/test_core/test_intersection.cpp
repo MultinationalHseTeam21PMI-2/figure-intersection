@@ -76,7 +76,7 @@ TEST(Triangle, test_triangles_intersection_1) {
         for(auto x : result) {
             actual.insert(x);
         }
-        ASSERT_EQ(actual, expected_segment);
+        ASSERT_EQ(actual, expected_segments);
     }
 }
 TEST(Figure, test_triangle_intersection_2) {
@@ -93,7 +93,7 @@ TEST(Figure, test_triangle_intersection_2) {
         for(auto x : result) {
             actual.insert(x);
         }
-        ASSERT_EQ(actual, expected_segment);
+        ASSERT_EQ(actual, expected_segments);
     }
 }
 TEST(Figure, test_triangle_intersection_3) {
