@@ -5,7 +5,7 @@ set(Sources
     Figure/Figure.cpp
     Segment/Segment.cpp
     Triangle/Triangle.cpp
-    Alghoritms/Alghoritms.cpp
+    Algorithms/Algorithms.cpp
 )
 
 add_library(${TARGET} SHARED ${Sources})
