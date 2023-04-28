@@ -53,6 +53,10 @@ std::vector<std::vector<Point>> input() {
 }
 
 void output(std::vector<Segment>& segments) {
+    if (segments.empty()) {
+        std::cout << "No triangle intersections found" << std::endl;
+        return;
+    }
     for (int i = 0; i < segments.size(); i++) {
         Point point1 = segments[i].point1();
         Point point2 = segments[i].point2();
