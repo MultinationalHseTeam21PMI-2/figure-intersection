@@ -5,7 +5,7 @@
 #include <memory>
 #include <stdexcept>
 
-#define PRECISION 0.001
+constexpr double PRECISION = 0.001;
 
 class Point {
 public:

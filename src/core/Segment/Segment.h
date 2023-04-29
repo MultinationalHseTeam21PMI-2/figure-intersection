@@ -39,12 +39,12 @@ public:
     }
 
 
-    bool operator==(const Segment other) const {
+    bool operator==(const Segment &other) const {
         return (m_point1 == other.m_point1 && m_point2 == other.m_point2) ||
                (m_point1 == other.m_point2 && m_point2 == other.m_point1);
     }
 
-    bool operator<(const Segment& other) const {
+    bool operator<(const Segment &other) const {
         return m_point1.norm() + m_point2.norm() < other.point1().norm() + other.point2().norm();
     }
 };
