@@ -8,8 +8,9 @@ add_subdirectory(googletest)
 add_subdirectory(tests)
 add_subdirectory(src/core)
 add_subdirectory(src/in-out)
+add_subdirectory(src/gui)
 
 add_executable(figure_intersection
     src/main.cpp
 )
-target_link_libraries(figure_intersection core in-out)
+target_link_libraries(figure_intersection core in-out gui)
