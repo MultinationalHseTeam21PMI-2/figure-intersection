@@ -6,16 +6,26 @@ std::vector<std::vector<Point>> input() {
     std::cout << "Enter the number of shapes:";
     std::cin >> n;
 
+    if (n <= 0) {
+        std::cerr << "Error: the number of shapes must be a positive integer" << std::endl;
+        return {};
+    }
+
     std::vector<std::vector<Point>> shapes(n);
-    for (int i = 0; i < n; i++) {
+    for (size_t i = 0; i < n; i++) {
         std::cout << "Enter the number of vertices for figure " << i + 1 << ":";
         int num_vertices;
         std::cin >> num_vertices;
 
+        if (num_vertices <= 0) {
+            std::cerr << "Error: the number of vertices must be a positive integer" << std::endl;
+            return {};
+        }
+
         std::vector<Point> vertices(num_vertices);
         std::cout << "Enter the vertex coordinates" << std::endl;
 
-        for (int j = 0; j < num_vertices; j++) {
+        for (size_t j = 0; j < num_vertices; j++) {
             std::string input;
             double x, y;
             std::cin >> input;
@@ -51,6 +61,7 @@ std::vector<std::vector<Point>> input() {
 
     return shapes;
 }
+
 
 void output(std::vector<Segment>& segments) {
     if (segments.empty()) {
