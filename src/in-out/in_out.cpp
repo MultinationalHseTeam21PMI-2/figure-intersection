@@ -1,13 +1,56 @@
 #include "in_out.h"
 
 
+double validVertices(const std::string& prom) {
+    double vertex;
+    std::string input;
+    std::cout << prom;
+    std::cin >> input;
+
+    if (!input.empty()) {
+        try {
+            vertex = std::stod(input);
+        } catch (...) {
+            std::cerr << "Error: Incorrect value entered. Enter numeric value."
+                << std::endl;
+            return {};
+        }
+
+    } else {
+        vertex = 0;
+    }
+
+    return vertex;
+}
+
+
+int validNumber(const std::string& prom) {
+    int number;
+    std::string input;
+    std::cout << prom;
+    std::cin >> input;
+
+    try {
+        number = std::stoi(input);
+        if (number <= 0) {
+            throw std::invalid_argument("The number must be positive integer.");
+        }
+    } catch (...) {
+        throw std::invalid_argument("Incorrect value entered. Enter a numeric value.");
+    }
+
+    return number;
+}
+
+
 std::vector<std::vector<Point>> input() {
     int n;
     std::cout << "Enter the number of shapes:";
-    std::cin >> n;
 
-    if (n <= 0) {
-        std::cerr << "Error: the number of shapes must be a positive integer" << std::endl;
+    try {
+        n = validNumber("");
+    } catch (const std::exception& e) {
+        std::cerr << "Error: " << e.what() << std::endl;
         return {};
     }
 
@@ -15,10 +58,11 @@ std::vector<std::vector<Point>> input() {
     for (size_t i = 0; i < n; i++) {
         std::cout << "Enter the number of vertices for figure " << i + 1 << ":";
         int num_vertices;
-        std::cin >> num_vertices;
 
-        if (num_vertices <= 0) {
-            std::cerr << "Error: the number of vertices must be a positive integer" << std::endl;
+        try {
+            num_vertices = validNumber("");
+        } catch (const std::exception& e) {
+            std::cerr << "Error: " << e.what() << std::endl;
             return {};
         }
 
@@ -26,34 +70,22 @@ std::vector<std::vector<Point>> input() {
         std::cout << "Enter the vertex coordinates" << std::endl;
 
         for (size_t j = 0; j < num_vertices; j++) {
-            std::string input;
             double x, y;
-            std::cin >> input;
-            if (!input.empty()) {
-                try {
-                    x = std::stod(input);
-                } catch (...) {
-                    std::cerr << "Error: Incorrect value entered. Enter numeric value."
-                    << std::endl;
-                    return {};
-                }
-            } else {
-                x = 0;
+
+            try {
+                x = validVertices("Enter the x-coordinate: ");
+            } catch (const std::exception& e) {
+                std::cerr << "Error: " << e.what() << std::endl;
+                return {};
             }
 
-            std::cin >> input;
-            if (!input.empty()) {
-                try {
-                    y = std::stod(input);
-                } catch (...) {
-                    std::cerr << "Error: Incorrect value entered. Enter numeric value."
-                    << std::endl;
-                    return {};
-                }
+            try {
+                y = validVertices("Enter the y-coordinate: ");
+            } catch (const std::exception& e) {
+                std::cerr << "Error: " << e.what() << std::endl;
+                return {};
             }
-            else {
-                y = 0;
-            }
+
             vertices[j] = Point(x, y);
         }
         shapes[i] = vertices;
