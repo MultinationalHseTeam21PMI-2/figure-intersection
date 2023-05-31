@@ -103,3 +103,51 @@ std::vector<Segment> intersection(const Figure &figure1, const Figure &figure2){
     return *union_of_intersections;
 }
 
+
+bool containsPoints(const std::vector<Point>& points, const Point& point) {
+    return (std::find(points.begin(), points.end(), point) != points.end());
+}
+
+bool isVertexInsidePolygon(const Figure& polygon, const Point& point) {
+    const std::vector<Segment>& segments = polygon.getSegments();
+    int count = 0;
+
+    for (const Segment& segment : segments) {
+        const Point& point1 = segment.point1();
+        const Point& point2 = segment.point2();
+
+        if ((point1.y <= point.y && point2.y > point.y) || (point2.y <= point.y && point1.y > point.y)) {
+            double x = (point.y - point1.y) * (point2.x - point1.x) / (point2.y - point1.y) + point1.x;
+
+            if (x > point.x) {
+                count++;
+            }
+        }
+    }
+
+    return (count % 2 == 1);
+}
+
+std::vector<Point> findInternalVertices(const Figure& polygon1, const Figure& polygon2) {
+    std::vector<Point> internalVertices;
+    for (const auto& segment : polygon1.getSegments()) {
+        if (isVertexInsidePolygon(polygon2, segment.point1()) && !(containsPoints(internalVertices, segment.point1()))) {
+            internalVertices.push_back(segment.point1());
+        }
+        if (isVertexInsidePolygon(polygon2, segment.point1()) && !(containsPoints(internalVertices, segment.point1()))) {
+            internalVertices.push_back(segment.point2());
+        }
+    }
+
+    for (const auto& segment : polygon2.getSegments()) {
+        if (isVertexInsidePolygon(polygon1, segment.point1()) && !(containsPoints(internalVertices, segment.point1()))) {
+            internalVertices.push_back(segment.point1());
+        }
+        if (isVertexInsidePolygon(polygon1, segment.point1()) && !(containsPoints(internalVertices, segment.point1()))) {
+            internalVertices.push_back(segment.point2());
+        }
+    }
+
+    return internalVertices;
+}
+
