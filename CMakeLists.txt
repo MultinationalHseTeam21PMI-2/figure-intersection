@@ -3,6 +3,14 @@ project(figure_intersection)
 
 set(CMAKE_CXX_STANDARD 17)
 
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
+
+find_package(Qt6 REQUIRED COMPONENTS Core Widgets)
+
 enable_testing()
 add_subdirectory(googletest)
 add_subdirectory(tests)
@@ -13,4 +21,4 @@ add_subdirectory(src/gui)
 add_executable(figure_intersection
     src/main.cpp
 )
-target_link_libraries(figure_intersection core in-out gui)
+target_link_libraries(figure_intersection core in-out gui Qt6::Core Qt6::Widgets)

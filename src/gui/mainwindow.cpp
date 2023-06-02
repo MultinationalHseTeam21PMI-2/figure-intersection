@@ -1,17 +1,18 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
-#include <QGraphicsScene>
-#include <QGraphicsView>
+#include "./mainwindow.h"
+
+#include <QBrush>
 #include <QGraphicsLineItem>
 #include <QGraphicsPolygonItem>
+#include <QGraphicsScene>
 #include <QGraphicsTextItem>
+#include <QGraphicsView>
 #include <QPen>
-#include <QBrush>
 #include <QtWidgets>
 
+#include "ui_mainwindow.h"
+
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+    : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     // Создаем графическую сцену и устанавливаем ее в QGraphicsView
@@ -33,8 +34,7 @@ MainWindow::MainWindow(QWidget *parent)
     setCentralWidget(view);
 }
 
-
-MainWindow::createTriangles(QGraphicsScene *scene, QGraphicsView *view)
+void MainWindow::createTriangles(QGraphicsScene *scene, QGraphicsView *view)
 {
     // Устанавливаем цвет чернил на черный
     QPen pen(Qt::black);
@@ -53,22 +53,22 @@ MainWindow::createTriangles(QGraphicsScene *scene, QGraphicsView *view)
     int minus = -1;
 
     std::vector<QPointF> pointsVector;
-/*
-    for (auto Figure : Figures_for_drawing){
-        for(auto segment : Figure.getSegments()){
-            QPointF point(segment.point1.x, segment.point1.y * minus);
-            pointsVector.push_back(point);
+    /*
+        for (auto Figure : Figures_for_drawing){
+            for(auto segment : Figure.getSegments()){
+                QPointF point(segment.point1.x, segment.point1.y * minus);
+                pointsVector.push_back(point);
+            }
         }
-    }
-*/
+    */
     // Создаем первый треугольник
     QPolygonF triangle1;
-    triangle1 << QPointF(-5, 6*minus) << QPointF(-6.09, 3.8*minus) << QPointF(-2.57, 3.76*minus);
+    triangle1 << QPointF(-5, 6 * minus) << QPointF(-6.09, 3.8 * minus) << QPointF(-2.57, 3.76 * minus);
     QGraphicsPolygonItem *triangle1Item = new QGraphicsPolygonItem(triangle1);
 
     // Создаем второй треугольник
     QPolygonF triangle2;
-    triangle2 << QPointF(-4.49, 4.68*minus) << QPointF(-2.21, 6.7*minus) << QPointF(-1.05, 5.16*minus);
+    triangle2 << QPointF(-4.49, 4.68 * minus) << QPointF(-2.21, 6.7 * minus) << QPointF(-1.05, 5.16 * minus);
     QGraphicsPolygonItem *triangle2Item = new QGraphicsPolygonItem(triangle2);
 
     // Получаем размеры фигуры
@@ -99,20 +99,18 @@ MainWindow::createTriangles(QGraphicsScene *scene, QGraphicsView *view)
     scene->addItem(triangle2Item);
 }
 
-
-
-MainWindow::createPoints(QGraphicsScene *scene)
+void MainWindow::createPoints(QGraphicsScene *scene)
 {
     // Из-за странного определения значений на оси У(Сверху минус бесконечность, а снизу плюс бесконечность, должно быть наоборот)
     int minus = -1;
-    for(int i = 0; i < 3; i++){
+    for (int i = 0; i < 3; i++) {
         // Создаем точки пересечения
-        QPointF point1(0+i, (4+i)*minus);
-        QPointF point2(0+i, (4+i)*minus);
+        QPointF point1(0 + i, (4 + i) * minus);
+        QPointF point2(0 + i, (4 + i) * minus);
 
         if (point1 == point2) {
             // Одна точка
-            QGraphicsEllipseItem *pointItem = new QGraphicsEllipseItem(point1.x()-0.125, point1.y()-0.125, 0.25, 0.25);
+            QGraphicsEllipseItem *pointItem = new QGraphicsEllipseItem(point1.x() - 0.125, point1.y() - 0.125, 0.25, 0.25);
             pointItem->setPen(Qt::NoPen);
             pointItem->setBrush(Qt::green);
             scene->addItem(pointItem);
@@ -125,7 +123,7 @@ MainWindow::createPoints(QGraphicsScene *scene)
     }
 }
 
-MainWindow::createAxis(QGraphicsScene *scene)
+void MainWindow::createAxis(QGraphicsScene *scene)
 {
     // Устанавливаем цвет чернил на черный
     QPen pen(Qt::black);
@@ -137,8 +135,8 @@ MainWindow::createAxis(QGraphicsScene *scene)
     pen.setWidthF(penWidth);
 
     // Рисуем оси координат
-    QGraphicsLineItem *xAxis = scene->addLine(-100, 0, 100, 0, pen); // Ось X
-    QGraphicsLineItem *yAxis = scene->addLine(0, -100, 0, 100, pen); // Ось Y
+    QGraphicsLineItem *xAxis = scene->addLine(-100, 0, 100, 0, pen);  // Ось X
+    QGraphicsLineItem *yAxis = scene->addLine(0, -100, 0, 100, pen);  // Ось Y
 
     // Создаем толщину шрифта
     QFont font;
@@ -148,22 +146,19 @@ MainWindow::createAxis(QGraphicsScene *scene)
     // Добавляем разметку на осях с шагом в 4 значения
     for (int i = -100; i <= 100; i += 4) {
         if (i != 0) {
-            QGraphicsLineItem *tick = scene->addLine(i, -1, i, 1, pen); // Разметка на оси X
-            QGraphicsTextItem *label = scene->addText(QString::number(i), font); // Надпись на оси X
+            QGraphicsLineItem *tick = scene->addLine(i, -1, i, 1, pen);           // Разметка на оси X
+            QGraphicsTextItem *label = scene->addText(QString::number(i), font);  // Надпись на оси X
             label->setPos(i - label->boundingRect().width() / 1.91, -3.1);
         }
         if (i != 0) {
-            QGraphicsLineItem *tick = scene->addLine(-1, i, 1, i, pen); // Разметка на оси Y
-            QGraphicsTextItem *label = scene->addText(QString::number(i*minus), font); // Надпись на оси Y
+            QGraphicsLineItem *tick = scene->addLine(-1, i, 1, i, pen);                   // Разметка на оси Y
+            QGraphicsTextItem *label = scene->addText(QString::number(i * minus), font);  // Надпись на оси Y
             label->setPos(3 - label->boundingRect().width(), i - label->boundingRect().height() / 2.1);
         }
     }
 }
 
-
 MainWindow::~MainWindow()
 {
     delete ui;
 }
-
-

@@ -1,5 +1,0 @@
-set(TARGET gui)
-
-set(Sources ./mainwindow.cpp ./mainwindow.h)
-
-add_library(${TARGET} SHARED ${Sources})
