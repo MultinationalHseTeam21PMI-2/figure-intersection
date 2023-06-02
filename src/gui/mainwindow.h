@@ -4,6 +4,8 @@
 #include <QGraphicsView>
 #include <QMainWindow>
 
+#include "../core/Figure/Figure.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
@@ -22,6 +24,8 @@ class MainWindow : public QMainWindow
     void createTriangles(QGraphicsScene *scene, QGraphicsView *view);
     void createPoints(QGraphicsScene *scene);
     void createAxis(QGraphicsScene *scene);
+
+    void draw(const std::vector<Figure>, const std::vector<Segment>);
 
    private:
     Ui::MainWindow *ui;

@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
     // Устанавливаем размеры QGraphicsView и сцены
     view->setFixedSize(800, 800);
 
-    // Вызываем функции
+    // // Вызываем функции
     createTriangles(scene, view);
     createPoints(scene);
     createAxis(scene);
@@ -161,4 +161,9 @@ void MainWindow::createAxis(QGraphicsScene *scene)
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::draw(const std::vector<Figure> figures, const std::vector<Segment> intersections)
+{
+    show();
 }
