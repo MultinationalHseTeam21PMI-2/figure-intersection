@@ -1,18 +1,13 @@
 #include "./mainwindow.h"
 
-#include <QBrush>
 #include <QGraphicsLineItem>
-#include <QGraphicsPolygonItem>
-#include <QGraphicsScene>
-#include <QGraphicsTextItem>
 #include <QGraphicsView>
-#include <QPen>
 #include <QtWidgets>
 
 #include "ui_mainwindow.h"
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow)
+MainWindow::MainWindow(std::vector<Triangle>& figures, const std::vector<Segment>& intersections, QWidget *parent)
+    : QMainWindow(parent), ui(new Ui::MainWindow), m_triangles(figures), m_intersections(intersections)
 {
     ui->setupUi(this);
     // Создаем графическую сцену и устанавливаем ее в QGraphicsView
@@ -24,8 +19,8 @@ MainWindow::MainWindow(QWidget *parent)
     view->setFixedSize(800, 800);
 
     // // Вызываем функции
-    createTriangles(scene, view);
-    createPoints(scene);
+    createTriangles(scene, view, figures);
+    createPoints(scene, intersections);
     createAxis(scene);
 
     // Включаем режим перетаскивания
@@ -34,8 +29,16 @@ MainWindow::MainWindow(QWidget *parent)
     setCentralWidget(view);
 }
 
-void MainWindow::createTriangles(QGraphicsScene *scene, QGraphicsView *view)
+void MainWindow::createTriangles(QGraphicsScene *scene, QGraphicsView *view,  std::vector<Triangle>& figures)
 {
+
+    for (int i = 0; i < figures.size(); i++){
+        for(int j = 0; j < figures[i].getSegments().size(); j++){
+            //std::cout << figures[i].getSegments()[j].point1().x <<", "<< figures[i].getSegments()[j].point1().y;
+            }
+    }
+
+    //std::cout << figures[0].getSegments().size();
     // Устанавливаем цвет чернил на черный
     QPen pen(Qt::black);
 
@@ -99,10 +102,30 @@ void MainWindow::createTriangles(QGraphicsScene *scene, QGraphicsView *view)
     scene->addItem(triangle2Item);
 }
 
-void MainWindow::createPoints(QGraphicsScene *scene)
+void MainWindow::createPoints(QGraphicsScene *scene, const std::vector<Segment>& intersections)
 {
     // Из-за странного определения значений на оси У(Сверху минус бесконечность, а снизу плюс бесконечность, должно быть наоборот)
     int minus = -1;
+
+    for (int i = 0; i < intersections.size(); i++) {
+        QPointF point1(intersections[i].point1().x, intersections[i].point1().y * minus);
+        QPointF point2(intersections[i].point2().x, intersections[i].point2().y * minus);
+        if (point1 == point2) {
+            // Одна точка
+            QGraphicsEllipseItem *pointItem = new QGraphicsEllipseItem(point1.x() - 0.125, point1.y() - 0.125, 0.25, 0.25);
+            pointItem->setPen(Qt::NoPen);
+            pointItem->setBrush(Qt::green);
+            scene->addItem(pointItem);
+        }
+        else {
+            // Сегмент
+            QGraphicsLineItem *lineItem = new QGraphicsLineItem(point1.x(), point1.y(), point2.x(), point2.y());
+            lineItem->setPen(QPen(Qt::green, 0.1));
+            scene->addItem(lineItem);
+        }
+    }
+
+    /*
     for (int i = 0; i < 3; i++) {
         // Создаем точки пересечения
         QPointF point1(0 + i, (4 + i) * minus);
@@ -121,6 +144,7 @@ void MainWindow::createPoints(QGraphicsScene *scene)
             scene->addItem(lineItem);
         }
     }
+     */
 }
 
 void MainWindow::createAxis(QGraphicsScene *scene)
@@ -165,5 +189,5 @@ MainWindow::~MainWindow()
 
 void MainWindow::draw(const std::vector<Figure> figures, const std::vector<Segment> intersections)
 {
-    show();
+
 }

@@ -9,7 +9,7 @@
 int main(int argc, char *argv[])
 {
     std::vector<std::vector<Point>> trianlges_points = input();
-    std::vector<Figure> triangles;
+    std::vector<Triangle> triangles;
     for (auto triangle : trianlges_points) {
         triangles.push_back(Triangle{triangle[0], triangle[1], triangle[2]});
     }
@@ -22,8 +22,10 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
 
-    MainWindow view;
+    MainWindow view(triangles, intersections);
 
-    view.draw(triangles, intersections);
+    //view.draw(triangles, intersections);
+    view.show();
+
     return a.exec();
 }
