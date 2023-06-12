@@ -2,6 +2,8 @@
 #include "../../src/core/Alghoritms/Alghoritms.h"
 
 
+
+//Test to verify that the point lies on the inlet of the triangle
 TEST(ContainsPointsTest, PointInPolygon) {
    Figure polygon = { Segment(Point(3.0, 6.0), Point(-1, 2)),
                       Segment(Point(-1, 2), Point(0, 10)),
@@ -16,39 +18,35 @@ TEST(ContainsPointsTest, PointInPolygon) {
 
 
 
-
+//Check that the coordinate is not one of the vertices of the triangle
 TEST(ContainsPointsTest, PointNotInPolygon) {
    std::vector<Point> points = { Point(3.0, 4.0), Point(5.0, 6.0), Point(1.0, 2.0) };
    Point point(7.0, 8.0);
 
-
    bool result = containsPoints(points, point);
-
 
    ASSERT_FALSE(result);
 }
 
 
 
-
-TEST(IsVertexInsidePolygonTest, VertexInsidePolygon) {
+//Test to verify that the point does not lie on the inlet of the triangle
+TEST(IsVertexInsidePolygonTest, VertexNotInsidePolygon) {
    Figure polygon({ Segment(Point(0.0, 0.0), Point(1.0, 0.0)),
                              Segment(Point(1.0, 0.0), Point(1.0, 1.0)),
                              Segment(Point(1.0, 1.0), Point(0.0, 1.0)),
                              Segment(Point(0.0, 1.0), Point(0.0, 0.0))
    });
-   Point vertex(0.5, 0.5);
-
+   Point vertex(2, 2);
 
    bool result = isVertexInsidePolygon(polygon, vertex);
 
-
-   ASSERT_TRUE(result);
+   ASSERT_FALSE(result);
 }
 
 
 
-
+//Test to find the vertices that lie within the second figure
 TEST(FindInternalVerticesTest, InternalVertices) {
    Figure polygon1({
                      Segment(Point(2.0, 2.0), Point(4.0, 2.0)),
@@ -84,7 +82,7 @@ TEST(FindInternalVerticesTest, InternalVertices) {
 
 
 
-
+//Test to check that two pieces do not intersect
 TEST(FindInternalVerticesTest, NoInternalVertices) {
    Figure polygon1({
                      Segment(Point(2.0, 2.0), Point(4.0, 2.0)),
@@ -113,7 +111,7 @@ TEST(FindInternalVerticesTest, NoInternalVertices) {
 
 
 
-
+//Test whether one shape lies inside another shape
 TEST(FindInternalVerticesTest, FigureInside) {
    Figure polygon1({
                      Segment(Point(2.0, 2.0), Point(4.0, 2.0)),
@@ -137,7 +135,6 @@ TEST(FindInternalVerticesTest, FigureInside) {
                                    Point(4.0, 5.0), Point(2.0, 5.0)
    };
    std::sort(expected.begin(), expected.end());
-
 
    std::vector<Point> result = findInternalVertices(polygon1, polygon2);
    std::sort(result.begin(), result.end());

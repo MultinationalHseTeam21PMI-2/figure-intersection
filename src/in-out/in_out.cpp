@@ -2,26 +2,26 @@
 
 
 double validVertices(const std::string& prom) {
-    double vertex;
     std::string input;
     std::cout << prom;
     std::cin >> input;
 
     if (!input.empty()) {
+        size_t pos;
         try {
-            vertex = std::stod(input);
+            double vertex = std::stod(input, &pos);
+            if (pos < input.size()) {
+                throw std::invalid_argument("Non-numeric value entered.");
+            }
+            return vertex;
         } catch (...) {
-            std::cerr << "Error: Incorrect value entered. Enter numeric value."
-                << std::endl;
-            return {};
+            throw std::invalid_argument("Non-numeric value entered.");
         }
-
     } else {
-        vertex = 0;
+        return 0.0;
     }
-
-    return vertex;
 }
+
 
 
 int validNumber(const std::string& prom) {
@@ -105,10 +105,9 @@ void output(std::vector<Segment>& segments) {
         Point point2 = segments[i].point2();
         if (point1 == point2) {
             std::cout << "Triangle intersection point: (" << point1.x << ", " << point1.y << ")" << std::endl;
-        }
-        else {
-            std::cout << "Triangles intersect on segment: (" << point1.x << ", " << point1.y << ") - (" << point2.x << ", " << point2.y << ")"
-            << std::endl;
+        } else {
+            std::cout << "Triangles intersect on segment: (" << point1.x << ", " << point1.y << ") - ("
+            << point2.x << ", " << point2.y << ")" << std::endl;
         }
     }
 }

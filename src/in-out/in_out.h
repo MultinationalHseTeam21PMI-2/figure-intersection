@@ -4,11 +4,9 @@
 
 #include <iostream>
 #include <string>
-#include <vector>
 #include "../core/Segment/Segment.h"
 
 std::vector<std::vector<Point>> input();
-
 
 void output(std::vector<Segment>& segments);
 
