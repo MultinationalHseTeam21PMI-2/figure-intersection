@@ -75,7 +75,7 @@ void MainWindow::createFigures(QGraphicsScene *scene, QGraphicsView *view, const
         // Рассчитываем новый масштаб осей
         qreal xScale = (view->width() / width);
         qreal yScale = (view->height() / height);
-        xyScale = (xScale + yScale) / 2 - 220;
+        xyScale = (xScale + yScale) / 4;
 
         // Настройка области просмотра
         QPointF figureCenter = figureItem->boundingRect().center();
