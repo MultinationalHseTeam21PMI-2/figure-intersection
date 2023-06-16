@@ -19,7 +19,7 @@ public:
     Figure(std::initializer_list<Segment> segments);
 
     size_t getCountVertices() const;
-    const std::vector<Segment> &getSegments() const;
+    const std::vector<Segment> getSegments() const;
 
     bool containsSegment(const Segment &segment) const;
 };

@@ -4,9 +4,11 @@
 #include <QGraphicsView>
 #include <QtWidgets>
 
+
+#include "../core/Figure/Figure.cpp"
 #include "ui_mainwindow.h"
 
-MainWindow::MainWindow(std::vector<Triangle>& figures, const std::vector<Segment>& intersections, QWidget *parent)
+MainWindow::MainWindow(const std::vector<Figure>& figures, const std::vector<Segment>& intersections, QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow), m_triangles(figures), m_intersections(intersections)
 {
     ui->setupUi(this);
@@ -19,8 +21,8 @@ MainWindow::MainWindow(std::vector<Triangle>& figures, const std::vector<Segment
     view->setFixedSize(800, 800);
 
     // // Вызываем функции
-    createTriangles(scene, view, figures);
-    createPoints(scene, intersections);
+    createFigures(scene, view, figures);
+    createIntersection(scene, intersections);
     createAxis(scene);
 
     // Включаем режим перетаскивания
@@ -29,80 +31,71 @@ MainWindow::MainWindow(std::vector<Triangle>& figures, const std::vector<Segment
     setCentralWidget(view);
 }
 
-void MainWindow::createTriangles(QGraphicsScene *scene, QGraphicsView *view,  std::vector<Triangle>& figures)
+void MainWindow::createFigures(QGraphicsScene *scene, QGraphicsView *view, const std::vector<Figure>& figures)
 {
-
-    for (int i = 0; i < figures.size(); i++){
-        for(int j = 0; j < figures[i].getSegments().size(); j++){
-            //std::cout << figures[i].getSegments()[j].point1().x <<", "<< figures[i].getSegments()[j].point1().y;
-            }
-    }
-
-    //std::cout << figures[0].getSegments().size();
-    // Устанавливаем цвет чернил на черный
-    QPen pen(Qt::black);
-
-    // Вычисляем толщину линии на основе размера фигуры
+    // толщина линии
     qreal penWidth = 0.01;
+
+    // Выставляем цвет линии
+    QPen pen(Qt::black);
 
     // Устанавливаем толщину линии
     pen.setWidthF(penWidth);
 
-    // Устанавливаем цвет заливки на красный
-    QBrush brush1(Qt::red);
-    QBrush brush2(Qt::blue);
-
     // Из-за странного определения значений на оси У(Сверху минус бесконечность, а снизу плюс бесконечность, должно быть наоборот)
     int minus = -1;
 
-    std::vector<QPointF> pointsVector;
-    /*
-        for (auto Figure : Figures_for_drawing){
-            for(auto segment : Figure.getSegments()){
-                QPointF point(segment.point1.x, segment.point1.y * minus);
-                pointsVector.push_back(point);
-            }
+    // Создаем фигуру
+    QPolygonF figure;
+
+    // Создаем переменную масштаб осей
+    qreal xyScale = 0;
+
+    // Создаем список цветов
+    QList<QColor> colors = {Qt::red, Qt::blue, Qt::yellow, Qt::cyan, Qt::magenta, Qt::gray};
+    int colorIndex = 0;
+
+    for (auto figur : figures){
+        for(auto segment : figur.getSegments()){
+            figure << QPointF(segment.point1().x, segment.point1().y * minus);
         }
-    */
-    // Создаем первый треугольник
-    QPolygonF triangle1;
-    triangle1 << QPointF(-5, 6 * minus) << QPointF(-6.09, 3.8 * minus) << QPointF(-2.57, 3.76 * minus);
-    QGraphicsPolygonItem *triangle1Item = new QGraphicsPolygonItem(triangle1);
+        QGraphicsPolygonItem *figureItem = new QGraphicsPolygonItem(figure);
 
-    // Создаем второй треугольник
-    QPolygonF triangle2;
-    triangle2 << QPointF(-4.49, 4.68 * minus) << QPointF(-2.21, 6.7 * minus) << QPointF(-1.05, 5.16 * minus);
-    QGraphicsPolygonItem *triangle2Item = new QGraphicsPolygonItem(triangle2);
+        // Устанавливаем толщину линии и цвет закраски для фигуры
+        QBrush brush(colors[colorIndex]);
+        figureItem->setPen(pen);
+        figureItem->setBrush(brush);
+        scene->addItem(figureItem);
 
-    // Получаем размеры фигуры
-    QRectF bounds = triangle1Item->boundingRect().united(triangle2Item->boundingRect());
-    qreal width = bounds.width();
-    qreal height = bounds.height();
+        // Получаем размеры фигуры
+        QRectF bounds = figureItem->boundingRect();
+        qreal width = bounds.width();
+        qreal height = bounds.height();
 
-    // Рассчитываем новый масштаб осей
-    qreal xScale = (view->width() / width);
-    qreal yScale = (view->height() / height);
-    qreal xyScale = (xScale + yScale) / 2 - 75;
+        // Рассчитываем новый масштаб осей
+        qreal xScale = (view->width() / width);
+        qreal yScale = (view->height() / height);
+        xyScale = (xScale + yScale) / 2 - 220;
+
+        // Настройка области просмотра
+        QPointF figureCenter = figureItem->boundingRect().center();
+        view->centerOn(figureCenter.x(), figureCenter.y());
+
+        // Очищаем от старой фигуры
+        figure.clear();
+
+        // Расчитываем индекс цвета для разнообразия политры фигур
+        colorIndex++;
+        if (colorIndex >= colors.size()) {
+            colorIndex = 0;
+        }
+    }
 
     // Устанавливаем новый масштаб осей
     view->scale(xyScale, xyScale);
-
-    // настройка области просмотра
-    QPointF triangleCenter = triangle1Item->boundingRect().center();
-    view->centerOn(triangleCenter.x(), triangleCenter.y());
-
-    // Устанавливаем толщину линии и цвет закраски для первого треугольника
-    triangle1Item->setPen(pen);
-    triangle1Item->setBrush(brush1);
-    scene->addItem(triangle1Item);
-
-    // Устанавливаем толщину линии и цвет закраски для второго треугольника
-    triangle2Item->setPen(pen);
-    triangle2Item->setBrush(brush2);
-    scene->addItem(triangle2Item);
 }
 
-void MainWindow::createPoints(QGraphicsScene *scene, const std::vector<Segment>& intersections)
+void MainWindow::createIntersection(QGraphicsScene *scene, const std::vector<Segment>& intersections)
 {
     // Из-за странного определения значений на оси У(Сверху минус бесконечность, а снизу плюс бесконечность, должно быть наоборот)
     int minus = -1;
@@ -124,27 +117,6 @@ void MainWindow::createPoints(QGraphicsScene *scene, const std::vector<Segment>&
             scene->addItem(lineItem);
         }
     }
-
-    /*
-    for (int i = 0; i < 3; i++) {
-        // Создаем точки пересечения
-        QPointF point1(0 + i, (4 + i) * minus);
-        QPointF point2(0 + i, (4 + i) * minus);
-
-        if (point1 == point2) {
-            // Одна точка
-            QGraphicsEllipseItem *pointItem = new QGraphicsEllipseItem(point1.x() - 0.125, point1.y() - 0.125, 0.25, 0.25);
-            pointItem->setPen(Qt::NoPen);
-            pointItem->setBrush(Qt::green);
-            scene->addItem(pointItem);
-        } else {
-            // Сегмент
-            QGraphicsLineItem *lineItem = new QGraphicsLineItem(point1.x(), point1.y(), point2.x(), point2.y());
-            lineItem->setPen(QPen(Qt::green, 0.1));
-            scene->addItem(lineItem);
-        }
-    }
-     */
 }
 
 void MainWindow::createAxis(QGraphicsScene *scene)
@@ -185,9 +157,4 @@ void MainWindow::createAxis(QGraphicsScene *scene)
 MainWindow::~MainWindow()
 {
     delete ui;
-}
-
-void MainWindow::draw(const std::vector<Figure> figures, const std::vector<Segment> intersections)
-{
-
 }

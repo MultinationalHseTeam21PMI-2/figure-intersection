@@ -9,7 +9,7 @@
 int main(int argc, char *argv[])
 {
     std::vector<std::vector<Point>> trianlges_points = input();
-    std::vector<Triangle> triangles;
+    std::vector<Figure> triangles;
     for (auto triangle : trianlges_points) {
         triangles.push_back(Triangle{triangle[0], triangle[1], triangle[2]});
     }
@@ -24,7 +24,6 @@ int main(int argc, char *argv[])
 
     MainWindow view(triangles, intersections);
 
-    //view.draw(triangles, intersections);
     view.show();
 
     return a.exec();
