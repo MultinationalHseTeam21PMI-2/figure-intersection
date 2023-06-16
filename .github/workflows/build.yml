@@ -18,7 +18,7 @@ jobs:
 
       - name: Configure CMake
         env:
-          CMAKE_PREFIX_PATH: ${{env.Qt6_Dir}}
+          CMAKE_PREFIX_PATH: ${{env.Qt6_DIR}}
         run: cmake -B ${{github.workspace}}/cmake-build-debug -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
         
 
