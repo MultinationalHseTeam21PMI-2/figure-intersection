@@ -20,11 +20,11 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v2
         with:
-          version: '6.2.*'
+          version: 6.2.*
 
       - name: Configure CMake
         env:
-          CMAKE_PREFIX_PATH: ${{env.Qt6_DIR}}
+          CMAKE_PREFIX_PATH: ${{env.Qt6_Dir}}
         run: cmake -B ${{github.workspace}}/cmake-build-debug -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
         
 
