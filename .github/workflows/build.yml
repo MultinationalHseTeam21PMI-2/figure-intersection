@@ -17,15 +17,14 @@ jobs:
           submodules: true
 
       - name: Configure CMake
+        env:
+          CMAKE_PREFIX_PATH: ${{env.Qt6_Dir}}
         run: cmake -B ${{github.workspace}}/cmake-build-debug -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+        
 
       - name: Build
         run: cmake --build ${{github.workspace}}/cmake-build-debug --config ${{env.BUILD_TYPE}}
         
-      - name: Install Qt
-        uses: jurplel/install-qt-action@v3
-        with:
-          version: '6.2.*'
           
       - name: Tests
         run: |
