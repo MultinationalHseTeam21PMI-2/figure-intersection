@@ -1,13 +1,10 @@
-#ifndef FIGURE_INTERSECTION_IN_OUT_H
-#define FIGURE_INTERSECTION_IN_OUT_H
-
-
+#pragma once
+#include "../core/Segment/Segment.h"
 #include <iostream>
 #include <string>
-#include "../core/Segment/Segment.h"
+#include <vector>
 
 std::vector<std::vector<Point>> input();
 
-void output(std::vector<Segment>& segments);
 
-#endif //FIGURE_INTERSECTION_IN_OUT_H
+void output(std::vector<Segment> &segments);
