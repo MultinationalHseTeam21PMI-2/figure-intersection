@@ -67,20 +67,22 @@ std::vector<std::vector<Point>> input() {
         }
 
         std::vector<Point> vertices(num_vertices);
-        std::cout << "Enter the vertex coordinates" << std::endl;
+        std::cout << "Enter the coordinates of all the vertices for the given figure" << std::endl <<
+                        R"(Input supports format: 1) simultaneous input of x y)" << std::endl
+                        << R"(2) subdivision, at first "x" and then "y" )" << std::endl;
 
         for (size_t j = 0; j < num_vertices; j++) {
             double x, y;
 
             try {
-                x = validVertices("Enter the x-coordinate: ");
+                x = validVertices("");
             } catch (const std::exception& e) {
                 std::cerr << "Error: " << e.what() << std::endl;
                 return {};
             }
 
             try {
-                y = validVertices("Enter the y-coordinate: ");
+                y = validVertices("");
             } catch (const std::exception& e) {
                 std::cerr << "Error: " << e.what() << std::endl;
                 return {};
