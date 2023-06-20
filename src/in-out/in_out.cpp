@@ -95,19 +95,13 @@ std::vector<std::vector<Point>> input() {
 }
 
 
-void output(std::vector<Segment>& segments) {
-    if (segments.empty()) {
-        std::cout << "No triangle intersections found" << std::endl;
+void output(std::vector<Point>& intersectPoints) {
+    if (intersectPoints.empty()) {
+        std::cout << "No shape intersections found" << std::endl;
         return;
     }
-    for (int i = 0; i < segments.size(); i++) {
-        Point point1 = segments[i].point1();
-        Point point2 = segments[i].point2();
-        if (point1 == point2) {
-            std::cout << "Triangle intersection point: (" << point1.x << ", " << point1.y << ")" << std::endl;
-        } else {
-            std::cout << "Triangles intersect on segment: (" << point1.x << ", " << point1.y << ") - ("
-            << point2.x << ", " << point2.y << ")" << std::endl;
-        }
+    for (int i = 0; i < intersectPoints.size(); i++) {
+        Point point1 = intersectPoints[i];
+        std::cout << "Shape intersection point: (" << point1.x << ", " << point1.y << ")" << std::endl;
     }
 }
