@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "../../src/core/Alghoritms/Alghoritms.h"
+#include "../../src/core/Algorithms/Algorithms.h"
 
 
 
