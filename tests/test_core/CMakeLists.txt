@@ -7,6 +7,7 @@ set(Sources
     test_segment.cpp
     test_triangle.cpp
     test_intersection.cpp
+    test_convexfigure.cpp
     main.cpp
 )
 
