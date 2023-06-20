@@ -1,6 +1,8 @@
 #include "Algorithms.h"
 
-bool are_equal(const double& a, const double& b, const double& precision = PRECISION) noexcept;
+bool inline are_equal(const double& a, const double& b, const double& precision = PRECISION) noexcept {
+    return std::abs(a-b) < precision;
+}
 
 bool lexicographical_comparator(std::pair<Point, bool> a, std::pair<Point, bool> b) noexcept;
 
@@ -84,12 +86,6 @@ std::vector<Segment> intersection(const Figure &figure1, const Figure &figure2) 
     }
     return union_of_intersections;
 }
-
-bool are_equal(const double& a, const double& b, const double& precision) noexcept {
-    if (std::abs(a) < precision / 2.0f && std::abs(b) < precision / 2.0f) return std::signbit(a) == std::signbit(b);
-    return std::abs(a - b) < precision;
-}
-
 bool lexicographical_comparator(std::pair<Point, bool> a, std::pair<Point, bool> b) noexcept {
     if (are_equal(a.first.x, b.first.x)) {
         return a.first.y < b.first.y;
