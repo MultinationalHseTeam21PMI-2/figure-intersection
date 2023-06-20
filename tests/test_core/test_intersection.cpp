@@ -6,11 +6,10 @@
 // Intersection for segments
 
 TEST(Segment, test_segment_intersection_is_segment) {
-    Point a(-6.67, 3.5), b(4.09, 4.62), c(11.467539, 5.3879223), d(-2.1667461, 3.96874017);
+    Point a(0, 0), b(1, 1), c(0.0001, 0.0001), d(1.0001, 1.0001);
     Segment X(a, b), Y(c, d);
     Segment Intersection_XY = *intersection(X, Y);
-
-    Segment expected_segment(d, b);
+    Segment expected_segment(c, b);
     ASSERT_EQ(Intersection_XY, expected_segment);
 }
 
