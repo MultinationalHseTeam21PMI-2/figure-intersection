@@ -100,8 +100,14 @@ void output(std::vector<Point>& intersectPoints) {
         std::cout << "No shape intersections found" << std::endl;
         return;
     }
-    for (int i = 0; i < intersectPoints.size(); i++) {
-        Point point1 = intersectPoints[i];
-        std::cout << "Shape intersection point: (" << point1.x << ", " << point1.y << ")" << std::endl;
+
+    std::set<Point> uniquePoints;
+
+    for (const Point& point : intersectPoints) {
+        uniquePoints.insert(point);
+    }
+
+    for (const Point& point : uniquePoints) {
+        std::cout << "Shape intersection point: (" << point.x << ", " << point.y << ")" << std::endl;
     }
 }
