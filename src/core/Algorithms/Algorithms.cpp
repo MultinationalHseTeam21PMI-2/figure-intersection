@@ -248,10 +248,10 @@ std::vector<Point> PolygonialIntersection(const Figure& a, const Figure& b) {
             v_to_convexhull.push_back(seg.point2());
     }
 
-    getConvexHull(v_to_convexhull, true);
 
     if (v_to_convexhull.empty())
         return std::vector<Point> ();
+        
     getConvexHull(v_to_convexhull, true);
     return v_to_convexhull;
 }
