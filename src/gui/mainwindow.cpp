@@ -74,7 +74,7 @@ void MainWindow::createFigures(QGraphicsScene *scene, QGraphicsView *view, const
         // Рассчитываем новый масштаб осей
         qreal xScale = (view->width() / width);
         qreal yScale = (view->height() / height);
-        xyScale = (xScale + yScale) / 4;
+        xyScale = (xScale + yScale) / 8;
 
         // Настройка области просмотра
         QPointF figureCenter = figureItem->boundingRect().center();
@@ -135,7 +135,7 @@ void MainWindow::createAxis(QGraphicsScene *scene)
     QPen pen(Qt::black);
 
     // Вычисляем толщину линии на основе размера фигуры
-    qreal penWidth = 0.01;
+    qreal penWidth = 0.005;
 
     // Устанавливаем толщину линии
     pen.setWidthF(penWidth);
