@@ -5,6 +5,7 @@ set(Sources
     Figure/Figure.cpp
     Segment/Segment.cpp
     Triangle/Triangle.cpp
+    ConvexFigure/ConvexFigure.cpp
     Algorithms/Algorithms.cpp
 )
 
