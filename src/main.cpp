@@ -13,16 +13,15 @@ int main(int argc, char *argv[])
     for (auto triangle : trianlges_points) {
         triangles.push_back(Triangle{triangle[0], triangle[1], triangle[2]});
     }
-    std::vector<Segment> intersections;
 
-    std::vector<Segment> fig_intersections = intersection(triangles[0], triangles[1]);
-    intersections.insert(std::end(intersections), std::begin(fig_intersections), std::end(fig_intersections));
+    std::vector<Point> intersections;
+    std::vector<Point> fig_intersections = PolygonialIntersection(triangles[0], triangles[1]);
 
-    output(intersections);
+    output(fig_intersections);
 
     QApplication a(argc, argv);
 
-    MainWindow view(triangles, intersections);
+    MainWindow view(triangles, fig_intersections);
 
     view.show();
 

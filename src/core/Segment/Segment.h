@@ -4,6 +4,7 @@
 #include <memory>
 #include <stdexcept>
 #include <vector>
+#include <cmath>
 
 #include "../Point/Point.h"
 
@@ -32,10 +33,8 @@ public:
     bool isPoint() const { return m_point1 == m_point2; }
 
     inline double get_slope() const {
-        if (std::abs(m_point1.x - m_point2.x) > PRECISION) {
-            return (m_point1.y - m_point2.y) / (m_point1.x - m_point2.x);
-        }
-        return 0;
+        auto vec_x = m_point1.x - m_point2.x, vec_y = m_point1.y - m_point2.y;
+        return acos(vec_x/std::sqrt(std::pow(vec_x, 2) + std::pow(vec_y,2)));
     }
 
 

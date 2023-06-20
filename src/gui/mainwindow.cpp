@@ -4,17 +4,16 @@
 #include <QGraphicsView>
 #include <QtWidgets>
 
-
 #include "../core/Figure/Figure.cpp"
 #include "ui_mainwindow.h"
 
-MainWindow::MainWindow(const std::vector<Figure>& figures, const std::vector<Segment>& intersections, QWidget *parent)
+MainWindow::MainWindow(const std::vector<Figure>& figures, const std::vector<Point>& intersections, QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow), m_triangles(figures), m_intersections(intersections)
 {
     ui->setupUi(this);
     // Создаем графическую сцену и устанавливаем ее в QGraphicsView
-    QGraphicsScene *scene = new QGraphicsScene(this);
-    QGraphicsView *view = new QGraphicsView(this);
+    scene = new QGraphicsScene(this);
+    view = new QGraphicsView(this);
     view->setScene(scene);
 
     // Устанавливаем размеры QGraphicsView и сцены
@@ -95,14 +94,21 @@ void MainWindow::createFigures(QGraphicsScene *scene, QGraphicsView *view, const
     view->scale(xyScale, xyScale);
 }
 
-void MainWindow::createIntersection(QGraphicsScene *scene, const std::vector<Segment>& intersections)
+void MainWindow::createIntersection(QGraphicsScene *scene, const std::vector<Point>& intersections)
 {
-    // Из-за странного определения значений на оси У(Сверху минус бесконечность, а снизу плюс бесконечность, должно быть наоборот)
+     // Из-за странного определения значений на оси У(Сверху минус бесконечность, а снизу плюс бесконечность, должно быть наоборот)
     int minus = -1;
 
+    QPointF point1;
+    QPointF point2;
+
     for (int i = 0; i < intersections.size(); i++) {
-        QPointF point1(intersections[i].point1().x, intersections[i].point1().y * minus);
-        QPointF point2(intersections[i].point2().x, intersections[i].point2().y * minus);
+        point1 = QPointF (intersections[i].x, intersections[i].y * minus);
+        if (i == intersections.size() - 1)
+            point2 = QPointF (intersections[0].x, intersections[0].y * minus);
+        else
+            point2 = QPointF(intersections[i + 1].x, intersections[i + 1].y * minus);
+
         if (point1 == point2) {
             // Одна точка
             QGraphicsEllipseItem *pointItem = new QGraphicsEllipseItem(point1.x() - 0.125, point1.y() - 0.125, 0.25, 0.25);
@@ -112,9 +118,13 @@ void MainWindow::createIntersection(QGraphicsScene *scene, const std::vector<Seg
         }
         else {
             // Сегмент
+            QGraphicsEllipseItem *pointItem = new QGraphicsEllipseItem(point1.x() - 0.125, point1.y() - 0.125, 0.25, 0.25);
+            pointItem->setPen(Qt::NoPen);
+            pointItem->setBrush(Qt::green);
             QGraphicsLineItem *lineItem = new QGraphicsLineItem(point1.x(), point1.y(), point2.x(), point2.y());
             lineItem->setPen(QPen(Qt::green, 0.1));
             scene->addItem(lineItem);
+            scene->addItem(pointItem);
         }
     }
 }
@@ -136,20 +146,20 @@ void MainWindow::createAxis(QGraphicsScene *scene)
 
     // Создаем толщину шрифта
     QFont font;
-    font.setPointSize(1);
+    font.setPixelSize(1);
 
     int minus = -1;
     // Добавляем разметку на осях с шагом в 4 значения
     for (int i = -100; i <= 100; i += 4) {
         if (i != 0) {
-            QGraphicsLineItem *tick = scene->addLine(i, -1, i, 1, pen);           // Разметка на оси X
+            QGraphicsLineItem *tick = scene->addLine(i, -0.5, i, 0.5, pen);           // Разметка на оси X
             QGraphicsTextItem *label = scene->addText(QString::number(i), font);  // Надпись на оси X
-            label->setPos(i - label->boundingRect().width() / 1.91, -3.1);
+            label->setPos(i - label->boundingRect().width() / 2, -3.8);
         }
         if (i != 0) {
-            QGraphicsLineItem *tick = scene->addLine(-1, i, 1, i, pen);                   // Разметка на оси Y
+            QGraphicsLineItem *tick = scene->addLine(-0.5, i, 0.5, i, pen);                   // Разметка на оси Y
             QGraphicsTextItem *label = scene->addText(QString::number(i * minus), font);  // Надпись на оси Y
-            label->setPos(3 - label->boundingRect().width(), i - label->boundingRect().height() / 2.1);
+            label->setPos(3.4 - label->boundingRect().width(), i - label->boundingRect().height() / 2.1);
         }
     }
 }
