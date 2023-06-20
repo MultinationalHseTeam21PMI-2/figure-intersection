@@ -1,6 +1,8 @@
 #include "Algorithms.h"
 
-bool are_equal(const double& a, const double& b, const double& precision = PRECISION) noexcept;
+bool inline are_equal(const double& a, const double& b, const double& precision = PRECISION) noexcept {
+    return std::abs(a-b) < precision;
+}
 
 bool lexicographical_comparator(std::pair<Point, bool> a, std::pair<Point, bool> b) noexcept;
 
@@ -83,11 +85,6 @@ std::vector<Segment> intersection(const Figure &figure1, const Figure &figure2) 
         }
     }
     return union_of_intersections;
-}
-
-bool are_equal(const double& a, const double& b, const double& precision) noexcept {
-    if (std::abs(a) < precision / 2.0f && std::abs(b) < precision / 2.0f) return std::signbit(a) == std::signbit(b);
-    return std::abs(a - b) < precision;
 }
 
 bool lexicographical_comparator(std::pair<Point, bool> a, std::pair<Point, bool> b) noexcept {
@@ -250,9 +247,12 @@ std::vector<Point> PolygonialIntersection(const Figure& a, const Figure& b) {
         std::find(v_to_convexhull.begin(), v_to_convexhull.end(), seg.point2()) == v_to_convexhull.end())
             v_to_convexhull.push_back(seg.point2());
     }
+
+    getConvexHull(v_to_convexhull, true);
+
     if (v_to_convexhull.empty())
         return std::vector<Point> ();
     getConvexHull(v_to_convexhull, true);
-
     return v_to_convexhull;
 }
+

@@ -34,7 +34,7 @@ public:
 
     inline double get_slope() const {
         auto vec_x = m_point1.x - m_point2.x, vec_y = m_point1.y - m_point2.y;
-        return acos(vec_x/std::sqrt(std::pow(vec_x, 2) + std::pow(vec_y,2)));
+        return std::acos(vec_x/std::sqrt(std::pow(vec_x, 2) + std::pow(vec_y,2)));
     }
 
 
