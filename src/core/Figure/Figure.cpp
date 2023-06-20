@@ -11,6 +11,9 @@ bool Figure::isCorrectFigure() const {
     std::set<Point> points;
 
     for (auto segment: m_segments) {
+        if (segment.isPoint()){
+            return false;
+        }
         all_points.push_back(segment.point1());
         all_points.push_back(segment.point2());
         points.insert(segment.point1());
@@ -37,10 +40,9 @@ const std::vector<Segment> Figure::getSegments() const {
     return m_segments;
 }
 
-
-Figure::Figure(std::initializer_list<Segment> segments){
+void Figure::ConstructFigure(std::vector<Segment> &segments){
     for (auto segment: segments) {
-        if (segment.isPoint() || containsSegment(segment)) {
+        if (containsSegment(segment)) {
             continue;
         }
 
@@ -57,6 +59,19 @@ Figure::Figure(std::initializer_list<Segment> segments){
     }
 }
 
+
+Figure::Figure(std::initializer_list<Segment> segments_list) {
+    std::vector<Segment> segments;
+    for (auto segment: segments_list)
+    {
+        segments.emplace_back(segment);
+    }
+    ConstructFigure(segments);
+}
+
+Figure::Figure(std::vector<Segment> &segments) {
+    ConstructFigure(segments);
+}
 
 bool Figure::containsSegment(const Segment &segment) const {
     Segment reversed_segment(segment.point2(), segment.point1());

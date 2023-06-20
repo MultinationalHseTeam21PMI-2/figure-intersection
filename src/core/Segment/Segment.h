@@ -22,7 +22,7 @@ public:
     /// @param point1
     /// @param point2
     Segment(const Point &point1, const Point &point2) : m_point1(point1), m_point2(point2){};
-
+    Segment(const Point &point) : m_point1(point), m_point2(point){};
 
     const Point &point1() const { return m_point1; }
     const Point &point2() const { return m_point2; }
