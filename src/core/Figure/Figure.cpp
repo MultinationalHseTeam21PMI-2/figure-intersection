@@ -36,7 +36,7 @@ size_t Figure::getCountVertices() const {
 }
 
 
-const std::vector<Segment> &Figure::getSegments() const {
+const std::vector<Segment> Figure::getSegments() const {
     return m_segments;
 }
 
