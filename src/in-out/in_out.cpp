@@ -45,10 +45,10 @@ int validNumber(const std::string& prom) {
 
 std::vector<std::vector<Point>> input() {
     int n = 2;
-    std::cout << "You need to enter data for 2 figures"
+    std::cout << "You need to enter data for 2 figures" << std::endl;
     std::vector<std::vector<Point>> shapes(n);
     for (size_t i = 0; i < n; i++) {
-        std::cout << "Enter the number of vertices for figure " << i + 1 << ":";
+        std::cout << "Enter the number of vertices for figure " << i + 1 << ": ";
         int num_vertices;
 
         try {
