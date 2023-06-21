@@ -56,9 +56,12 @@ std::unique_ptr<Segment> intersection(const Segment &a, const Segment &b) {
     return nullptr;
 }
 
+
 bool is_subset(const Segment &subset, const Segment &set) {
     return is_belong_to_segment(subset.point1(), set) && is_belong_to_segment(subset.point2(), set);
 }
+
+
 std::vector<Segment> intersection(const Figure &figure1, const Figure &figure2) {
     std::vector<Segment> union_of_intersections;
     for (auto seg_a: figure1.getSegments()) {
@@ -93,6 +96,8 @@ bool lexicographical_comparator(std::pair<Point, bool> a, std::pair<Point, bool>
     }
     return a.first.x < b.first.x;
 }
+
+
 std::string determinate_pattern(const std::vector<std::pair<Point, bool>> &marked_points) noexcept {
     std::string intersection_pattern{};
     for (auto x: marked_points) {
@@ -100,21 +105,29 @@ std::string determinate_pattern(const std::vector<std::pair<Point, bool>> &marke
     }
     return intersection_pattern;
 }
+
+
 bool are_intersect(const std::string &intersection_pattern) noexcept {
     if (intersection_pattern == "XXYY" || intersection_pattern == "YYXX") {
         return false;
     }
     return true;
 }
+
+
 bool is_between(double a, double b, double mid, double precision) noexcept {
     return std::min(a, b) <= mid + precision && mid <= std::max(a, b) + precision;
 }
+
+
 bool is_point_between(const Point &a, const Point &b, const Point &mid, double precision) noexcept{
     if (is_between(a.x, b.x, mid.x, precision) && is_between(a.y, b.y, mid.y, precision)) {
         return true;
     }
     return false;
 }
+
+
 Point solve_linear_system(const Segment &a, const Segment &b) {
     // Вычисляем коэффициенты уравнений Ax + By + C = 0 прямых, на которых лежат отрезки
     const double A1 = a.point2().y - a.point1().y, A2 = b.point2().y - b.point1().y;
@@ -129,23 +142,31 @@ Point solve_linear_system(const Segment &a, const Segment &b) {
 
     return Point(RESULT_X, RESULT_Y);
 }
+
+
 bool is_belong_to_segment(const Point &point, const Segment &segment, double precision) noexcept {
     return is_point_between(segment.point1(), segment.point2(), point, precision) &&
             (std::abs(f_line(segment, point)) < precision);
 }
+
+
 double f_line(const Segment &a, const Point &arg) noexcept {
     const double A = a.point2().y - a.point1().y,
                  B = a.point1().x - a.point2().x,
                  C = a.point1().y * a.point2().x - a.point1().x * a.point2().y;
     return A * arg.x + B * arg.y + C;
 }
+
+
 bool is_segments_on_same_line(const Segment &a, const Segment &b, double precision) noexcept {
     return std::abs(f_line(b, a.point1())) < precision;
 }
 
+
 bool containsPoints(const std::vector<Point>& points, const Point& point) {
     return (std::find(points.begin(), points.end(), point) != points.end());
 }
+
 
 bool isVertexInsidePolygon(const Figure& polygon, const Point& point) {
     const std::vector<Segment>& segments = polygon.getSegments();
@@ -166,6 +187,7 @@ bool isVertexInsidePolygon(const Figure& polygon, const Point& point) {
 
     return (count % 2 == 1);
 }
+
 
 std::vector<Point> findInternalVertices(const Figure& polygon1, const Figure& polygon2) {
     std::vector<Point> internalVertices;
@@ -202,7 +224,10 @@ bool clockwise(Point a, Point b, Point c, bool include_collinear) {
     auto o = orientation(a, b, c);
     return o < 0 || (include_collinear && o == 0);
 }
+
+
 bool are_col(Point a, Point b, Point c) { return orientation(a, b, c) == 0; }
+
 
 void getConvexHull(std::vector<Point>& simplex, bool include_collinear) {
 
@@ -236,6 +261,8 @@ void getConvexHull(std::vector<Point>& simplex, bool include_collinear) {
     }
     simplex = simplex_stack;
 }
+
+
 std::vector<Point> PolygonialIntersection(const Figure& a, const Figure& b) {
     std::vector<Segment> edge_intersection_v = intersection(a, b);
     std::vector<Point> inner_intersection_v = findInternalVertices(a, b);

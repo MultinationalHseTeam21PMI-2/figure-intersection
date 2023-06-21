@@ -44,19 +44,11 @@ int validNumber(const std::string& prom) {
 
 
 std::vector<std::vector<Point>> input() {
-    int n;
-    std::cout << "Enter the number of shapes:";
-
-    try {
-        n = validNumber("");
-    } catch (const std::exception& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
-        return {};
-    }
-
+    int n = 2;
+    std::cout << "You need to enter data for 2 figures" << std::endl;
     std::vector<std::vector<Point>> shapes(n);
     for (size_t i = 0; i < n; i++) {
-        std::cout << "Enter the number of vertices for figure " << i + 1 << ":";
+        std::cout << "Enter the number of vertices for figure " << i + 1 << ": ";
         int num_vertices;
 
         try {
@@ -67,20 +59,22 @@ std::vector<std::vector<Point>> input() {
         }
 
         std::vector<Point> vertices(num_vertices);
-        std::cout << "Enter the vertex coordinates" << std::endl;
+        std::cout << "Enter the coordinates of all the vertices for the given figure." << std::endl
+                    <<"(Input supports format: 1) simultaneous input of x y)" << std::endl
+                    << "2) subdivision, at first 'x' and then 'y'" << std::endl;
 
         for (size_t j = 0; j < num_vertices; j++) {
             double x, y;
 
             try {
-                x = validVertices("Enter the x-coordinate: ");
+                x = validVertices("");
             } catch (const std::exception& e) {
                 std::cerr << "Error: " << e.what() << std::endl;
                 return {};
             }
 
             try {
-                y = validVertices("Enter the y-coordinate: ");
+                y = validVertices("");
             } catch (const std::exception& e) {
                 std::cerr << "Error: " << e.what() << std::endl;
                 return {};
