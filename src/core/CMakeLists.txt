@@ -9,4 +9,4 @@ set(Sources
     Algorithms/Algorithms.cpp
 )
 
-add_library(${TARGET} SHARED ${Sources})
+add_library(${TARGET} STATIC ${Sources})

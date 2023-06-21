@@ -4,7 +4,6 @@
 #include <QGraphicsView>
 #include <QtWidgets>
 
-#include "../core/Figure/Figure.cpp"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(const std::vector<Figure>& figures, const std::vector<Point>& intersections, QWidget *parent)
