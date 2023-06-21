@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.24)
+cmake_minimum_required(VERSION 3.20)
 
 set(This TestCore)
 
@@ -8,6 +8,7 @@ set(Sources
     test_triangle.cpp
     test_intersection.cpp
     test_in_point.cpp
+    test_convexfigure.cpp
     main.cpp
 )
 

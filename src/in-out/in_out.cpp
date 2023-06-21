@@ -44,19 +44,8 @@ int validNumber(const std::string& prom) {
 
 
 std::vector<std::vector<Point>> input() {
-    int n;
-    std::cout << "Enter the number of shapes, they should be two:";
-
-    try {
-        n = validNumber("");
-        if (n != 2) {
-            throw std::invalid_argument("Error: The number of shapes must be equal to two.");
-        }
-    } catch (const std::exception& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
-        return {};
-    }
-
+    int n = 2;
+    std::cout << "You need to enter data for 2 figures"
     std::vector<std::vector<Point>> shapes(n);
     for (size_t i = 0; i < n; i++) {
         std::cout << "Enter the number of vertices for figure " << i + 1 << ":";

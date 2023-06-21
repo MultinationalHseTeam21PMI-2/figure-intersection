@@ -13,13 +13,16 @@ private:
 
     bool isCorrectFigure() const;
 
+protected:
+    void ConstructFigure(std::vector<Segment> &segment);
 public:
     Figure() {}
 
     Figure(std::initializer_list<Segment> segments);
+    Figure(std::vector<Segment> &segments);
 
     size_t getCountVertices() const;
-    const std::vector<Segment> &getSegments() const;
+    const std::vector<Segment> getSegments() const;
 
     bool containsSegment(const Segment &segment) const;
 };

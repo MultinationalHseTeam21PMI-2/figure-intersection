@@ -90,7 +90,6 @@ std::vector<Segment> intersection(const Figure &figure1, const Figure &figure2) 
     return union_of_intersections;
 }
 
-
 bool lexicographical_comparator(std::pair<Point, bool> a, std::pair<Point, bool> b) noexcept {
     if (are_equal(a.first.x, b.first.x)) {
         return a.first.y < b.first.y;
@@ -275,10 +274,11 @@ std::vector<Point> PolygonialIntersection(const Figure& a, const Figure& b) {
         std::find(v_to_convexhull.begin(), v_to_convexhull.end(), seg.point2()) == v_to_convexhull.end())
             v_to_convexhull.push_back(seg.point2());
     }
-    getConvexHull(v_to_convexhull, true);
+
 
     if (v_to_convexhull.empty())
         return std::vector<Point> ();
+        
     getConvexHull(v_to_convexhull, true);
     return v_to_convexhull;
 }
