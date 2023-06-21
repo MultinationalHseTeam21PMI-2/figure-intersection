@@ -50,35 +50,55 @@ void MainWindow::createFigures(QGraphicsScene *scene, QGraphicsView *view, const
     // Создаем переменную масштаб осей
     qreal xyScale = 0;
 
+    QPointF point1;
+    QPointF point2;
+
     // Создаем список цветов
     QList<QColor> colors = {Qt::red, Qt::blue, Qt::yellow, Qt::cyan, Qt::magenta, Qt::gray};
     int colorIndex = 0;
 
-    for (auto figur : figures){
-        for(auto segment : figur.getSegments()){
-            figure << QPointF(segment.point1().x, segment.point1().y * minus);
+    for (int i = 0; i < figures.size(); i++){
+        for(int j = 0; j < figures[i].getSegments().size(); j++){
+            figure << QPointF(figures[i].getSegments()[j].point1().x, figures[i].getSegments()[j].point1().y * minus);
+            point1 = QPointF(figures[i].getSegments()[j].point1().x, figures[i].getSegments()[j].point1().y * minus);
+            point2 = QPointF(figures[i].getSegments()[j].point2().x, figures[i].getSegments()[j].point2().y * minus);
         }
-        QGraphicsPolygonItem *figureItem = new QGraphicsPolygonItem(figure);
+        if(figure.size() == 1 and point1 == point2){
+            QGraphicsEllipseItem *pointItem = new QGraphicsEllipseItem(point1.x() - 0.125, point1.y() - 0.125, 0.25, 0.25);
+            pointItem->setPen(Qt::NoPen);
+            pointItem->setBrush(colors[colorIndex]);
+            scene->addItem(pointItem);
+            xyScale = 40;
+        }
+        else if (figure.size() == 1 and point1 != point2){
+            QGraphicsLineItem *lineItem = new QGraphicsLineItem(point1.x(), point1.y(), point2.x(), point2.y());
+            lineItem->setPen(QPen(colors[colorIndex], 0.1));
+            scene->addItem(lineItem);
+            xyScale = 40;
+        }
+        else{
+            QGraphicsPolygonItem *figureItem = new QGraphicsPolygonItem(figure);
 
-        // Устанавливаем толщину линии и цвет закраски для фигуры
-        QBrush brush(colors[colorIndex]);
-        figureItem->setPen(pen);
-        figureItem->setBrush(brush);
-        scene->addItem(figureItem);
+            // Устанавливаем толщину линии и цвет закраски для фигуры
+            QBrush brush(colors[colorIndex]);
+            figureItem->setPen(pen);
+            figureItem->setBrush(brush);
+            scene->addItem(figureItem);
 
-        // Получаем размеры фигуры
-        QRectF bounds = figureItem->boundingRect();
-        qreal width = bounds.width();
-        qreal height = bounds.height();
+            // Получаем размеры фигуры
+            QRectF bounds = figureItem->boundingRect();
+            qreal width = bounds.width();
+            qreal height = bounds.height();
 
-        // Рассчитываем новый масштаб осей
-        qreal xScale = (view->width() / width);
-        qreal yScale = (view->height() / height);
-        xyScale = (xScale + yScale) / 8;
+            // Рассчитываем новый масштаб осей
+            qreal xScale = (view->width() / width);
+            qreal yScale = (view->height() / height);
+            xyScale = (xScale + yScale) / 8;
 
-        // Настройка области просмотра
-        QPointF figureCenter = figureItem->boundingRect().center();
-        view->centerOn(figureCenter.x(), figureCenter.y());
+            // Настройка области просмотра
+            QPointF figureCenter = figureItem->boundingRect().center();
+            view->centerOn(figureCenter.x(), figureCenter.y());
+        }
 
         // Очищаем от старой фигуры
         figure.clear();
