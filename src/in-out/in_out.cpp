@@ -45,10 +45,13 @@ int validNumber(const std::string& prom) {
 
 std::vector<std::vector<Point>> input() {
     int n;
-    std::cout << "Enter the number of shapes:";
+    std::cout << "Enter the number of shapes, they should be two:";
 
     try {
         n = validNumber("");
+        if (n != 2) {
+            throw std::invalid_argument("Error: The number of shapes must be equal to two.");
+        }
     } catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << std::endl;
         return {};
@@ -67,9 +70,9 @@ std::vector<std::vector<Point>> input() {
         }
 
         std::vector<Point> vertices(num_vertices);
-        std::cout << "Enter the coordinates of all the vertices for the given figure" << std::endl <<
-                        R"(Input supports format: 1) simultaneous input of x y)" << std::endl
-                        << R"(2) subdivision, at first "x" and then "y" )" << std::endl;
+        std::cout << "Enter the coordinates of all the vertices for the given figure." << std::endl
+                    <<"(Input supports format: 1) simultaneous input of x y)" << std::endl
+                    << "2) subdivision, at first 'x' and then 'y'" << std::endl;
 
         for (size_t j = 0; j < num_vertices; j++) {
             double x, y;
