@@ -49,7 +49,8 @@ std::unique_ptr<Segment> intersection(const Segment &a, const Segment &b) {
         //          конфигурация "YXXY" - случай, когда первый отрезок вложен во второй;
         //          конфигурация "XYXY - случай, когда первый и второй отрезок имеют общую линейную часть;
         //      В обоих конфигурация серединные точки выступают в качестве отрезка, совпадающего с пересечением.
-        if (are_intersect(determinate_pattern(sorted_segment_points))) {
+        if (are_intersect(determinate_pattern(sorted_segment_points)) ||
+            sorted_segment_points[1].first == sorted_segment_points[2].first)  {
             return std::make_unique<Segment>(sorted_segment_points.at(1).first, sorted_segment_points.at(2).first);
         }
         return nullptr;
