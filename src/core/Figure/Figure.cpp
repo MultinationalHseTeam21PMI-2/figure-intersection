@@ -52,11 +52,16 @@ void Figure::ConstructFigure(std::vector<Segment> &segments){
     if (!isCorrectFigure())
         throw std::runtime_error("Can't create figure by passed segments");
 
-    if (m_segments.size() == 1) {
-        m_count_vertices = 2;
-    } else {
+    if (m_segments.size() != 1) {
         m_count_vertices = m_segments.size();
+        return;
+    } 
+        
+    if (m_segments[0].isPoint()){
+        m_count_vertices = 1;
+        return;
     }
+    m_count_vertices = 2;
 }
 
 
