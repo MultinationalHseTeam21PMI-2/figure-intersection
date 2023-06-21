@@ -25,6 +25,11 @@ Point solve_linear_system(const Segment &a, const Segment &b);
 
 std::unique_ptr<Segment> intersection(const Segment &a, const Segment &b) {
     if(a == b) return std::make_unique<Segment>(a.point1(), a.point2());
+    else if( a.isPoint() && (a.point1() == b.point1() || a.point1() == b.point2()) )
+        return std::make_unique<Segment>(a.point1(), a.point2());
+    else if( b.isPoint() && (b.point1() == a.point1() || b.point1() == a.point2()) )
+        return std::make_unique<Segment>(b.point1(), b.point2());
+    
     if (are_equal(a.get_slope(), b.get_slope())) {
         if (!is_segments_on_same_line(a, b)) return nullptr;
 
