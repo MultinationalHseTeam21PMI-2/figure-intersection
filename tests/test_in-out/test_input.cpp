@@ -5,7 +5,7 @@
 
 //Test to verify the correct input of components for each of their shapes
 TEST(InputTest, ValidInput) {
-  std::istringstream input_stream("2\n 3\n 1 2\n 3 4\n 5 6\n "
+  std::istringstream input_stream("3\n 1 2\n 3 4\n 5 6\n "
                                   "4\n 0 0\n 1 1\n 2 2\n 3 3\n");
 
   std::streambuf* old_cin = std::cin.rdbuf(input_stream.rdbuf());
@@ -51,7 +51,7 @@ TEST(InputTest, LetterIncteadCount) {
 
 //Test for entering a letter instead of a coordinates of vertex
 TEST(InputTest, LetterInsteadVertex) {
-  std::istringstream input_stream("2\n 3\n -1 0\n -10 10\n abba cabac"
+  std::istringstream input_stream("3\n -1 0\n -10 10\n abba cabac"
                                   "3\n 5 6\n 7 8\n 9 10\n");
 
   std::streambuf* old_cin = std::cin.rdbuf(input_stream.rdbuf());
@@ -66,7 +66,7 @@ TEST(InputTest, LetterInsteadVertex) {
 
 //Test for fully correct input of each component of shapes
 TEST(InputTest, FullyCorrectInput) {
-    std::istringstream input_stream("2\n 4\n -1 0\n -10 10\n 3 4\n 5 6\n"
+    std::istringstream input_stream("4\n -1 0\n -10 10\n 3 4\n 5 6\n"
                                   "5\n 5 6\n -7 -8\n 0 10\n 1.2 3.4 \n 0.0 0.0");
 
   std::streambuf* old_cin = std::cin.rdbuf(input_stream.rdbuf());
