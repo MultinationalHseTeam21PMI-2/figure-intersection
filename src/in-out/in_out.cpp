@@ -106,10 +106,12 @@ void output(std::vector<Point>& intersectPoints) {
         return;
     }
 
-    std::set<Point> uniquePoints;
+    std::vector<Point> uniquePoints;
 
     for (const Point& point : intersectPoints) {
-        uniquePoints.insert(point);
+        if (std::find(uniquePoints.begin(), uniquePoints.end(), point) == uniquePoints.end()) {
+            uniquePoints.push_back(point);
+        }
     }
 
     for (const Point& point : uniquePoints) {
