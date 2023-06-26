@@ -98,7 +98,9 @@ void output(std::vector<Point>& intersectPoints) {
     std::vector<Point> uniquePoints;
 
     for (const Point& point : intersectPoints) {
-        uniquePoints.push_back(point);
+        if (std::find(uniquePoints.begin(), uniquePoints.end(), point) == uniquePoints.end()) {
+            uniquePoints.push_back(point);
+        }
     }
 
     for (const Point& point : uniquePoints) {
